@@ -12,9 +12,24 @@ import net.sf.jsqlparser.statement.select.SubSelect;
 /**
  * Created by Richard on 2018-03-04.
  */
-public class ExpVisitor implements ExpressionVisitor {
+public class GenericExpressionVisitor implements ExpressionVisitor {
 
-    public void doWork(Expression exp){
+    protected MyIntervalTree intervalTree;
+    private int extractedValue; // ToDo: Only integers are considered as of now
+
+    private AndExpressionVisitor andExpressionVisitor;
+
+    public GenericExpressionVisitor(){
+        intervalTree = new MyIntervalTree();
+
+        extractedValue = 0;
+    }
+
+    protected int getExtractedValue(){
+        return extractedValue;
+    }
+
+    public void process(Expression exp){
         if (exp instanceof AndExpression) {
             this.visit((AndExpression)exp);
         } else if (exp instanceof OrExpression) {
@@ -57,6 +72,7 @@ public class ExpVisitor implements ExpressionVisitor {
         }
     }
 
+
     public void visit(NullValue nullValue) {
 
     }
@@ -78,11 +94,11 @@ public class ExpVisitor implements ExpressionVisitor {
     }
 
     public void visit(DoubleValue doubleValue) {
-        System.out.println("Value: " + doubleValue.getValue());
+        extractedValue = (int)doubleValue.getValue();
     }
 
     public void visit(LongValue longValue) {
-
+        extractedValue = (int)longValue.getValue();
     }
 
     public void visit(HexValue hexValue) {
@@ -126,8 +142,7 @@ public class ExpVisitor implements ExpressionVisitor {
     }
 
     public void visit(AndExpression andExpression) {
-        doWork(andExpression.getLeftExpression());
-        doWork(andExpression.getRightExpression());
+        andExpressionVisitor.process(andExpression);
     }
 
 //    public void visit(AndExpression andExpression) {
@@ -144,8 +159,9 @@ public class ExpVisitor implements ExpressionVisitor {
 //    }
 
     public void visit(OrExpression orExpression) {
-//        doWork(OrExpression);
-//        doWork(OrExpression.getRightExpression());
+        // ToDo: library does not seem to support Or Expression for the moment
+//        process(OrExpression);
+//        process(OrExpression.getRightExpression());
     }
 
     public void visit(Between between) {
@@ -153,18 +169,20 @@ public class ExpVisitor implements ExpressionVisitor {
     }
 
     public void visit(EqualsTo equalsTo) {
-        doWork(equalsTo.getLeftExpression());
-        doWork(equalsTo.getRightExpression());
+        process(equalsTo.getLeftExpression());
+        process(equalsTo.getRightExpression());
+
+        intervalTree.insert(new MyIntervalTree.Point(extractedValue));
     }
 
     public void visit(GreaterThan greaterThan) {
-        doWork(greaterThan.getLeftExpression());
-        doWork(greaterThan.getRightExpression());
+        process(greaterThan.getLeftExpression());
+        process(greaterThan.getRightExpression());
     }
 
     public void visit(GreaterThanEquals greaterThanEquals) {
-        doWork(greaterThanEquals.getLeftExpression());
-        doWork(greaterThanEquals.getRightExpression());
+        process(greaterThanEquals.getLeftExpression());
+        process(greaterThanEquals.getRightExpression());
     }
 
     public void visit(InExpression inExpression) {
@@ -180,18 +198,18 @@ public class ExpVisitor implements ExpressionVisitor {
     }
 
     public void visit(MinorThan minorThan) {
-        doWork(minorThan.getLeftExpression());
-        doWork(minorThan.getRightExpression());
+        process(minorThan.getLeftExpression());
+        process(minorThan.getRightExpression());
     }
 
     public void visit(MinorThanEquals minorThanEquals) {
-        doWork(minorThanEquals.getLeftExpression());
-        doWork(minorThanEquals.getRightExpression());
+        process(minorThanEquals.getLeftExpression());
+        process(minorThanEquals.getRightExpression());
     }
 
     public void visit(NotEqualsTo notEqualsTo) {
-        doWork(notEqualsTo.getLeftExpression());
-        doWork(notEqualsTo.getRightExpression());
+        process(notEqualsTo.getLeftExpression());
+        process(notEqualsTo.getRightExpression());
     }
 
     public void visit(Column column) {

@@ -51,7 +51,7 @@ public class App {
                     //System.out.println("Selected Item: " + item.toString());
                 }
 
-                ExpressionVisitor visitor = new ExpVisitor();
+                ExpressionVisitor visitor = new GenericExpressionVisitor();
                 Expression exp = ps.getWhere();
 
                 exp.accept(visitor);
