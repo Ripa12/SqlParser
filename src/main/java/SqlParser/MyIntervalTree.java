@@ -1,5 +1,6 @@
 package SqlParser;
 
+// ToDO: Implement Red-Black tree self-balancing
 public class MyIntervalTree {
 
     public class TreeNode{
@@ -12,6 +13,11 @@ public class MyIntervalTree {
             this.data = data;
             this.max = data.getHigh();
             left = right = null;
+        }
+
+        @Override
+        public String toString(){
+            return String.format("Start: " + data.getLow() + " end: " + data.getHigh());
         }
     }
 
@@ -81,11 +87,14 @@ public class MyIntervalTree {
         root = null;
     }
 
-    public TreeNode insert(NodeData data){
-        return insert(root, data);
+    public void insert(NodeData data){
+        TreeNode node = insert(root, data);
+        if(this.root == null)
+            this.root = node;
     }
 
     private TreeNode insert(TreeNode root, NodeData data){
+
         if(root == null)
             return new TreeNode(data);
 
@@ -104,6 +113,22 @@ public class MyIntervalTree {
         root.max = root.max < data.getHigh() ? data.getHigh() : root.max;
 
         return root;
+    }
+
+    public void iterate(){
+        iterate(this.root);
+    }
+
+    private void iterate(TreeNode root)
+    {
+        if (root == null)
+            return;
+
+        iterate(root.left);
+
+        System.out.println(root.toString());
+
+        iterate(root.right);
     }
 
 }

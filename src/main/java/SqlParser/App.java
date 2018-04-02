@@ -17,7 +17,10 @@ import net.sf.jsqlparser.statement.select.*;
 import net.sf.jsqlparser.util.TablesNamesFinder;
 
 import java.io.StringReader;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Hello world!
@@ -27,17 +30,27 @@ import java.util.List;
 public class App {
     public static void main(String[] args) {
 
-// TODO Auto-generated method stub
-        String statements = "SELECT * FROM Customers WHERE Country='Mexico';\n" +
-                "SELECT * FROM mytable WHERE b=5 AND c>3;";
-//statement = SampleSQL1.sql;
+        // TODO Auto-generated method stub
+        String statements = "SELECT * FROM Customers WHERE A=5;\n" +
+                "SELECT * FROM Customers WHERE B > 3 AND B < 10;" +
+                "SELECT * FROM Customers WHERE B > 1 AND B < 10;" +
+                "SELECT * FROM Customers WHERE B > 1 AND B < 10;";
+
+        Map<String, MyIntervalTree> intervalTrees = new HashMap<String, MyIntervalTree>();
+
+        // ToDo: Read all column names before-hand
+        intervalTrees.put("A", new MyIntervalTree());
+        intervalTrees.put("B", new MyIntervalTree());
+        intervalTrees.put("C", new MyIntervalTree());
+        ExpressionVisitor visitor = new GenericExpressionVisitor(intervalTrees);
 
         CCJSqlParserManager parserManager = new CCJSqlParserManager();
 
         Select select = null;
         try {
             //select = (Select) parserManager.parse(new StringReader(statements));
-            Statements stats = CCJSqlParserUtil.parseStatements(statements);
+            Statements stats = CCJSqlParserUtil.parseStatements(QueryGenerator.generateBatchOfQueries());
+
             for(Statement statement : stats.getStatements()){
                 select = (Select) statement;
                 PlainSelect ps = (PlainSelect) select.getSelectBody();
@@ -45,16 +58,15 @@ public class App {
                 FromItem tableName = ps.getFromItem();
                 System.out.println("Tablename: " + tableName.toString());
 
-                List<SelectItem> selectItems = ps.getSelectItems();
-                for(SelectItem item : selectItems){
+//                List<SelectItem> selectItems = ps.getSelectItems();
+//                for(SelectItem item : selectItems){
+//                    //System.out.println("Selected Item: " + item.toString());
+//                }
 
-                    //System.out.println("Selected Item: " + item.toString());
-                }
-
-                ExpressionVisitor visitor = new GenericExpressionVisitor();
                 Expression exp = ps.getWhere();
 
                 exp.accept(visitor);
+
 
                 //System.out.println(ps.getSelectItems().get(1).toString());
 
@@ -70,13 +82,16 @@ public class App {
 
                 //System.out.println(andExpression.getLeftExpression());
 
-
-                //System.out.println(e.getLeftExpression());  // whitch is another expression you can drill down
                 System.out.println();
             }
         } catch (JSQLParserException e) {
             e.printStackTrace();
         }
         System.out.println("Hello World!");
+
+        for (Map.Entry<String, MyIntervalTree> entry : intervalTrees.entrySet())
+        {
+            entry.getValue().iterate();
+        }
     }
 }

@@ -9,69 +9,29 @@ import net.sf.jsqlparser.expression.operators.relational.*;
 import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.statement.select.SubSelect;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Richard on 2018-03-04.
  */
 public class GenericExpressionVisitor implements ExpressionVisitor {
 
-    protected MyIntervalTree intervalTree;
+    private Map<String, MyIntervalTree> intervalTrees;
+
     private int extractedValue; // ToDo: Only integers are considered as of now
 
-    private AndExpressionVisitor andExpressionVisitor;
+    private String extractedColumn;
 
-    public GenericExpressionVisitor(){
-        intervalTree = new MyIntervalTree();
+    private boolean isInterval;
 
+
+    public GenericExpressionVisitor(Map<String, MyIntervalTree> trees){
+        intervalTrees = trees;
         extractedValue = 0;
+        extractedColumn = "";
+        isInterval = false;
     }
-
-    protected int getExtractedValue(){
-        return extractedValue;
-    }
-
-    public void process(Expression exp){
-        if (exp instanceof AndExpression) {
-            this.visit((AndExpression)exp);
-        } else if (exp instanceof OrExpression) {
-            visit((OrExpression)exp);
-        }
-        else if (exp instanceof EqualsTo) {
-            visit((EqualsTo)exp);
-        }
-        else if (exp instanceof GreaterThan) {
-            visit((GreaterThan)exp);
-        }
-        else if (exp instanceof GreaterThanEquals) {
-            visit((GreaterThanEquals)exp);
-        }
-        else if (exp instanceof MinorThan) {
-            visit((MinorThan)exp);
-        }
-        else if (exp instanceof MinorThanEquals) {
-            visit((MinorThanEquals)exp);
-        }
-        else if (exp instanceof NotEqualsTo) {
-            visit((NotEqualsTo)exp);
-        }
-        else if (exp instanceof DoubleValue) {
-            this.visit((DoubleValue)exp);
-        } else if (exp instanceof StringValue) {
-            visit((StringValue)exp);
-        }
-        else if (exp instanceof JdbcNamedParameter) {
-            visit((JdbcNamedParameter)exp);
-        }
-        else if (exp instanceof JdbcParameter) {
-            visit((JdbcParameter)exp);
-        }
-        else if (exp instanceof Column) {
-            visit((Column)exp);
-        }
-        else {
-            // Do naught
-        }
-    }
-
 
     public void visit(NullValue nullValue) {
 
@@ -121,8 +81,10 @@ public class GenericExpressionVisitor implements ExpressionVisitor {
 
     }
 
+    // ToDo: Strings are out of scope, ignore!
     public void visit(StringValue stringValue) {
-        System.out.println("String: " + stringValue.getValue());
+        //System.out.println("String: " + stringValue.getValue());
+        //extractedColumn = stringValue.getValue();
     }
 
     public void visit(Addition addition) {
@@ -142,21 +104,34 @@ public class GenericExpressionVisitor implements ExpressionVisitor {
     }
 
     public void visit(AndExpression andExpression) {
-        andExpressionVisitor.process(andExpression);
-    }
+        int start, end;
+        String leftCol, rightCol;
 
-//    public void visit(AndExpression andExpression) {
-//        if(andExpression != null) {
-//            if (andExpression.getLeftExpression() instanceof AndExpression) {
-//                andExpression.getLeftExpression().accept(this);
-//            } else {
-//                //System.out.println(andExpression.getLeftExpression());
-//            }
-//
-//            andExpression.getLeftExpression().accept(this);
-//            //System.out.println(andExpression.getRightExpression());
-//        }
-//    }
+        isInterval = true;
+
+        andExpression.getLeftExpression().accept(this);
+        start = extractedValue;
+        leftCol = extractedColumn;
+
+        andExpression.getRightExpression().accept(this);
+        end = extractedValue;
+        rightCol = extractedColumn;
+
+        // ToDo: identical columns must be part of same AND expression (i.e. A > 2 AND A < 4, not A > 2 AND B > 1 AND A < 5)
+        if (leftCol.equalsIgnoreCase(rightCol)){
+            // ToDo: maybe check that start is smaller than end?
+            intervalTrees.get(rightCol).insert(new MyIntervalTree.Interval(start, end));
+        }
+        else{
+            // ToDo: no support for infinity yet...
+            //intervalTrees.get(leftCol).insert(new MyIntervalTree.Point(start));
+
+            //intervalTrees.get(rightCol).insert(new MyIntervalTree.Point(end));
+        }
+
+        isInterval = false;
+
+    }
 
     public void visit(OrExpression orExpression) {
         // ToDo: library does not seem to support Or Expression for the moment
@@ -169,20 +144,30 @@ public class GenericExpressionVisitor implements ExpressionVisitor {
     }
 
     public void visit(EqualsTo equalsTo) {
-        process(equalsTo.getLeftExpression());
-        process(equalsTo.getRightExpression());
+        equalsTo.getLeftExpression().accept(this);
+        equalsTo.getRightExpression().accept(this);
 
-        intervalTree.insert(new MyIntervalTree.Point(extractedValue));
+        intervalTrees.get(extractedColumn).insert(new MyIntervalTree.Point(extractedValue));
     }
 
     public void visit(GreaterThan greaterThan) {
-        process(greaterThan.getLeftExpression());
-        process(greaterThan.getRightExpression());
+        //process(greaterThan.getLeftExpression());
+        //process(greaterThan.getRightExpression());
+
+        greaterThan.getLeftExpression().accept(this);
+        greaterThan.getRightExpression().accept(this);
+
+        // ToDo: what if decimal?
+        extractedValue += 1;
+
     }
 
     public void visit(GreaterThanEquals greaterThanEquals) {
-        process(greaterThanEquals.getLeftExpression());
-        process(greaterThanEquals.getRightExpression());
+        //process(greaterThanEquals.getLeftExpression());
+        //process(greaterThanEquals.getRightExpression());
+
+        greaterThanEquals.getLeftExpression().accept(this);
+        greaterThanEquals.getRightExpression().accept(this);
     }
 
     public void visit(InExpression inExpression) {
@@ -198,22 +183,31 @@ public class GenericExpressionVisitor implements ExpressionVisitor {
     }
 
     public void visit(MinorThan minorThan) {
-        process(minorThan.getLeftExpression());
-        process(minorThan.getRightExpression());
+        //process(minorThan.getLeftExpression());
+        //process(minorThan.getRightExpression());
+        minorThan.getLeftExpression().accept(this);
+        minorThan.getRightExpression().accept(this);
+
+        extractedValue -= 1;
     }
 
     public void visit(MinorThanEquals minorThanEquals) {
-        process(minorThanEquals.getLeftExpression());
-        process(minorThanEquals.getRightExpression());
+        //process(minorThanEquals.getLeftExpression());
+        //process(minorThanEquals.getRightExpression());
+
+        minorThanEquals.getLeftExpression().accept(this);
+        minorThanEquals.getRightExpression().accept(this);
     }
 
+    // ToDo: no support for yet, maybe separate estimator for != and -INF > A < INF
     public void visit(NotEqualsTo notEqualsTo) {
-        process(notEqualsTo.getLeftExpression());
-        process(notEqualsTo.getRightExpression());
+        //process(notEqualsTo.getLeftExpression());
+        //process(notEqualsTo.getRightExpression());
     }
 
     public void visit(Column column) {
-        System.out.println("Attribute: " + column.getColumnName());
+        //System.out.println("Attribute: " + column.getColumnName());
+        extractedColumn = column.getColumnName();
     }
 
     public void visit(SubSelect subSelect) {
