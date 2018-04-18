@@ -2,14 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b3c707b8-6b20-426a-bd55-9e8aa044a33d" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_3_8_1.xml" afterPath="" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/SqlParser.iml" afterPath="$PROJECT_DIR$/SqlParser.iml" />
       <change beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
       <change beforePath="$PROJECT_DIR$/src/main/java/SqlParser/App.java" afterPath="$PROJECT_DIR$/src/main/java/SqlParser/App.java" />
-      <change beforePath="$PROJECT_DIR$/target/classes/SqlParser/App.class" afterPath="$PROJECT_DIR$/target/classes/SqlParser/App.class" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/SqlParser/AppTest.class" afterPath="$PROJECT_DIR$/target/test-classes/SqlParser/AppTest.class" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SqlParser/QueryGenerator.java" afterPath="$PROJECT_DIR$/src/main/java/SqlParser/QueryGenerator.java" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/SqlParser/CliqueTest.java" afterPath="$PROJECT_DIR$/src/test/java/SqlParser/CliqueTest.java" />
+      <change beforePath="$PROJECT_DIR$/target/classes/SqlParser/App.class" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -30,52 +29,41 @@
       <file leaf-file-name="App.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/App.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1223">
-              <caret line="101" column="5" lean-forward="false" selection-start-line="101" selection-start-column="5" selection-end-line="101" selection-end-column="5" />
+            <state relative-caret-position="243">
+              <caret line="35" column="18" lean-forward="false" selection-start-line="35" selection-start-column="18" selection-end-line="35" selection-end-column="18" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <marker date="1524053124000" expanded="false" signature="1991:2015" ph="&lt;~&gt;" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CliqueTest.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="test_data.csv" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/target/classes/test_data.csv">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-17342307">
+              <caret line="8" column="11" lean-forward="true" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CliqueTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/SqlParser/CliqueTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="563">
-              <caret line="211" column="10" lean-forward="false" selection-start-line="211" selection-start-column="10" selection-end-line="211" selection-end-column="10" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="my_subspace_test.csv" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/data/testdata/unittests/my_subspace_test.csv">
-          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="75">
-              <caret line="5" column="9" lean-forward="false" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
+              <caret line="5" column="75" lean-forward="true" selection-start-line="5" selection-start-column="75" selection-end-line="5" selection-end-column="75" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
+      <file leaf-file-name="test_data.csv" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/testdata/unittests/test_data.csv">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="25" column="70" lean-forward="false" selection-start-line="25" selection-start-column="70" selection-end-line="25" selection-end-column="70" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GenericExpressionVisitor.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/GenericExpressionVisitor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="17" column="24" lean-forward="false" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
+            <state relative-caret-position="180">
+              <caret line="1156168" column="11" lean-forward="true" selection-start-line="1156168" selection-start-column="11" selection-end-line="1156168" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -84,9 +72,11 @@
       <file leaf-file-name="QueryGenerator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/QueryGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="50" lean-forward="false" selection-start-line="16" selection-start-column="50" selection-end-line="16" selection-end-column="50" />
-              <folding />
+            <state relative-caret-position="167">
+              <caret line="60" column="43" lean-forward="false" selection-start-line="60" selection-start-column="43" selection-end-line="60" selection-end-column="43" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -145,22 +135,21 @@
         <option value="$PROJECT_DIR$/src/main/java/SqlParser/GenericExpressionVisitor.java" />
         <option value="$PROJECT_DIR$/src/main/java/SqlParser/MyIntervalTree.java" />
         <option value="$PROJECT_DIR$/src/main/java/SqlParser/MyTreeMap.java" />
-        <option value="$PROJECT_DIR$/src/main/java/SqlParser/QueryGenerator.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/data/testdata/unittests/subspace-simple.csv" />
-        <option value="$PROJECT_DIR$/src/main/java/SqlParser/App.java" />
         <option value="$PROJECT_DIR$/data/testdata/unittests/subspace-overlapping-4-5d.ascii" />
         <option value="$PROJECT_DIR$/data/testdata/unittests/subspace-overlapping-3-4d.ascii" />
-        <option value="$PROJECT_DIR$/src/test/java/SqlParser/CliqueTest.java" />
         <option value="$PROJECT_DIR$/data/testdata/unittests/my_subspace_test.csv" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/SqlParser/App.java" />
+        <option value="$PROJECT_DIR$/src/test/java/SqlParser/CliqueTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/SqlParser/QueryGenerator.java" />
+        <option value="$PROJECT_DIR$/data/testdata/unittests/test_data.csv" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
-    <option name="width" value="1618" />
-    <option name="height" value="870" />
+    <option name="width" value="2560" />
+    <option name="height" value="1440" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -178,6 +167,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -233,6 +224,13 @@
               <item name="SqlParser" type="b2602c69:ProjectViewProjectNode" />
               <item name="SqlParser" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SqlParser" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SqlParser" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -249,13 +247,22 @@
               <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="SqlParser" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SqlParser" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SqlParser" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SqlParser" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SqlParser" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+              <item name="classes" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -263,6 +270,9 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/data/testdata/unittests" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/data/testdata" />
     </key>
@@ -555,8 +565,8 @@
     <recent_temporary>
       <list size="3">
         <item index="0" class="java.lang.String" itemvalue="JUnit.CliqueTest.testCLIQUEResults" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.CliqueTest.testCLIQUESubspaceOverlapping" />
-        <item index="2" class="java.lang.String" itemvalue="Application.App" />
+        <item index="1" class="java.lang.String" itemvalue="Application.App" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.CliqueTest.testCLIQUESubspaceOverlapping" />
       </list>
     </recent_temporary>
   </component>
@@ -577,34 +587,34 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CliqueTest_testCLIQUEResults - 2018.04.17 at 21h 14m 09s.xml">
+    <history-entry file="CliqueTest_testCLIQUEResults - 2018.04.18 at 22h 05m 37s.xml">
       <configuration name="CliqueTest.testCLIQUEResults" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CliqueTest_testCLIQUEResults - 2018.04.17 at 21h 14m 28s.xml">
+    <history-entry file="CliqueTest_testCLIQUEResults - 2018.04.18 at 22h 07m 02s.xml">
       <configuration name="CliqueTest.testCLIQUEResults" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CliqueTest_testCLIQUEResults - 2018.04.17 at 21h 15m 34s.xml">
+    <history-entry file="CliqueTest_testCLIQUEResults - 2018.04.18 at 22h 09m 59s.xml">
       <configuration name="CliqueTest.testCLIQUEResults" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CliqueTest_testCLIQUEResults - 2018.04.17 at 21h 15m 42s.xml">
+    <history-entry file="CliqueTest_testCLIQUEResults - 2018.04.18 at 22h 11m 27s.xml">
       <configuration name="CliqueTest.testCLIQUEResults" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CliqueTest_testCLIQUEResults - 2018.04.17 at 21h 16m 04s.xml">
+    <history-entry file="CliqueTest_testCLIQUEResults - 2018.04.18 at 22h 13m 08s.xml">
       <configuration name="CliqueTest.testCLIQUEResults" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CliqueTest_testCLIQUEResults - 2018.04.17 at 21h 16m 15s.xml">
+    <history-entry file="CliqueTest_testCLIQUEResults - 2018.04.18 at 22h 14m 59s.xml">
       <configuration name="CliqueTest.testCLIQUEResults" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CliqueTest_testCLIQUEResults - 2018.04.17 at 21h 17m 05s.xml">
+    <history-entry file="CliqueTest_testCLIQUEResults - 2018.04.18 at 22h 16m 33s.xml">
       <configuration name="CliqueTest.testCLIQUEResults" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CliqueTest_testCLIQUEResults - 2018.04.17 at 21h 17m 23s.xml">
+    <history-entry file="CliqueTest_testCLIQUEResults - 2018.04.18 at 22h 17m 38s.xml">
       <configuration name="CliqueTest.testCLIQUEResults" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CliqueTest_testCLIQUEResults - 2018.04.17 at 21h 17m 48s.xml">
+    <history-entry file="CliqueTest_testCLIQUEResults - 2018.04.18 at 22h 21m 58s.xml">
       <configuration name="CliqueTest.testCLIQUEResults" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CliqueTest_testCLIQUEResults - 2018.04.17 at 21h 19m 00s.xml">
+    <history-entry file="CliqueTest_testCLIQUEResults - 2018.04.18 at 22h 22m 12s.xml">
       <configuration name="CliqueTest.testCLIQUEResults" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -627,7 +637,7 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39972714" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39928058" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -655,8 +665,14 @@
           <properties />
           <option name="timeStamp" value="30" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/SqlParser/CliqueTest.java</url>
+          <line>93</line>
+          <properties />
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="31" />
+      <option name="time" value="36" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
@@ -669,32 +685,13 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/IntervalExpressionVisitor.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/MyIntervalTree.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="19" lean-forward="true" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
-          <folding>
-            <element signature="e#403#404#0" expanded="true" />
-            <element signature="e#502#503#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/GenericExpressionVisitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/App.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="31" column="56" lean-forward="false" selection-start-line="31" selection-start-column="56" selection-end-line="31" selection-end-column="56" />
           <folding>
             <element signature="imports" expanded="true" />
+            <marker date="1524053124000" expanded="false" signature="1991:2015" ph="&lt;~&gt;" />
           </folding>
         </state>
       </provider>
@@ -716,6 +713,7 @@
           <caret line="31" column="56" lean-forward="false" selection-start-line="31" selection-start-column="56" selection-end-line="31" selection-end-column="56" />
           <folding>
             <element signature="imports" expanded="true" />
+            <marker date="1524053124000" expanded="false" signature="1991:2015" ph="&lt;~&gt;" />
           </folding>
         </state>
       </provider>
@@ -734,6 +732,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <marker date="1524053124000" expanded="false" signature="1991:2015" ph="&lt;~&gt;" />
           </folding>
         </state>
       </provider>
@@ -760,6 +759,7 @@
           <caret line="31" column="56" lean-forward="false" selection-start-line="31" selection-start-column="56" selection-end-line="31" selection-end-column="56" />
           <folding>
             <element signature="imports" expanded="true" />
+            <marker date="1524053124000" expanded="false" signature="1991:2015" ph="&lt;~&gt;" />
           </folding>
         </state>
       </provider>
@@ -786,6 +786,7 @@
           <caret line="31" column="56" lean-forward="false" selection-start-line="31" selection-start-column="56" selection-end-line="31" selection-end-column="56" />
           <folding>
             <element signature="imports" expanded="true" />
+            <marker date="1524053124000" expanded="false" signature="1991:2015" ph="&lt;~&gt;" />
           </folding>
         </state>
       </provider>
@@ -812,6 +813,7 @@
           <caret line="31" column="56" lean-forward="false" selection-start-line="31" selection-start-column="56" selection-end-line="31" selection-end-column="56" />
           <folding>
             <element signature="imports" expanded="true" />
+            <marker date="1524053124000" expanded="false" signature="1991:2015" ph="&lt;~&gt;" />
           </folding>
         </state>
       </provider>
@@ -839,6 +841,7 @@
           <caret line="35" column="0" lean-forward="false" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <marker date="1524053124000" expanded="false" signature="1991:2015" ph="&lt;~&gt;" />
           </folding>
         </state>
       </provider>
@@ -858,6 +861,7 @@
           <caret line="25" column="96" lean-forward="false" selection-start-line="25" selection-start-column="96" selection-end-line="25" selection-end-column="96" />
           <folding>
             <element signature="imports" expanded="true" />
+            <marker date="1524053124000" expanded="false" signature="1991:2015" ph="&lt;~&gt;" />
           </folding>
         </state>
       </provider>
@@ -877,6 +881,7 @@
           <caret line="25" column="96" lean-forward="false" selection-start-line="25" selection-start-column="96" selection-end-line="25" selection-end-column="96" />
           <folding>
             <element signature="imports" expanded="true" />
+            <marker date="1524053124000" expanded="false" signature="1991:2015" ph="&lt;~&gt;" />
           </folding>
         </state>
       </provider>
@@ -929,11 +934,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/MyTreeMap.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_74/src.zip!/java/util/TreeMap.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/QueryGenerator.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/SqlParser/AppTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="50" lean-forward="false" selection-start-line="16" selection-start-column="50" selection-end-line="16" selection-end-column="50" />
-          <folding />
+        <state relative-caret-position="105">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/de/lmu/ifi/dbs/elki/elki/0.7.1/elki-0.7.1.jar!/de/lmu/ifi/dbs/elki/data/model/SubspaceModel.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/de/lmu/ifi/dbs/elki/elki/0.7.1/elki-0.7.1.jar!/de/lmu/ifi/dbs/elki/utilities/optionhandling/parameterization/ListParameterization.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/testdata/unittests/subspace-overlapping-3-4d.ascii">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="750">
+          <caret line="890" column="85" lean-forward="false" selection-start-line="890" selection-start-column="85" selection-end-line="890" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/testdata/unittests/subspace-simple.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="62" lean-forward="true" selection-start-line="23" selection-start-column="62" selection-end-line="23" selection-end-column="62" />
         </state>
       </provider>
     </entry>
@@ -948,66 +980,69 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/GenericExpressionVisitor.java">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/test_data.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="17" column="24" lean-forward="false" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/testdata/unittests/my_subspace_test.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="25" column="70" lean-forward="false" selection-start-line="25" selection-start-column="70" selection-end-line="25" selection-end-column="70" />
+        <state relative-caret-position="788">
+          <caret line="58" column="19" lean-forward="false" selection-start-line="58" selection-start-column="19" selection-end-line="58" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/SqlParser/AppTest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/GenericExpressionVisitor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/de/lmu/ifi/dbs/elki/elki/0.7.1/elki-0.7.1.jar!/de/lmu/ifi/dbs/elki/data/model/SubspaceModel.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/de/lmu/ifi/dbs/elki/elki/0.7.1/elki-0.7.1.jar!/de/lmu/ifi/dbs/elki/utilities/optionhandling/parameterization/ListParameterization.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/testdata/unittests/subspace-overlapping-3-4d.ascii">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="750">
-          <caret line="890" column="85" lean-forward="false" selection-start-line="890" selection-start-column="85" selection-end-line="890" selection-end-column="85" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/testdata/unittests/subspace-simple.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="62" lean-forward="true" selection-start-line="23" selection-start-column="62" selection-end-line="23" selection-end-column="62" />
+        <state relative-caret-position="103">
+          <caret line="17" column="24" lean-forward="false" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/App.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1223">
-          <caret line="101" column="5" lean-forward="false" selection-start-line="101" selection-start-column="5" selection-end-line="101" selection-end-column="5" />
+        <state relative-caret-position="243">
+          <caret line="35" column="18" lean-forward="false" selection-start-line="35" selection-start-column="18" selection-end-line="35" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1524053124000" expanded="false" signature="1991:2015" ph="&lt;~&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/target/classes/test_data.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-17342307">
+          <caret line="8" column="11" lean-forward="true" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/testdata/unittests/test_data.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="1156168" column="11" lean-forward="true" selection-start-line="1156168" selection-start-column="11" selection-end-line="1156168" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/QueryGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="60" column="43" lean-forward="false" selection-start-line="60" selection-start-column="43" selection-end-line="60" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1016,18 +1051,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/SqlParser/CliqueTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="563">
-          <caret line="211" column="10" lean-forward="false" selection-start-line="211" selection-start-column="10" selection-end-line="211" selection-end-column="10" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/testdata/unittests/my_subspace_test.csv">
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
-          <caret line="5" column="9" lean-forward="false" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
+          <caret line="5" column="75" lean-forward="true" selection-start-line="5" selection-start-column="75" selection-end-line="5" selection-end-column="75" />
           <folding />
         </state>
       </provider>

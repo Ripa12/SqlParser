@@ -45,10 +45,10 @@ public class CliqueTest {
     @Test
     public void testCLIQUEResults() {
 //        Database db = makeSimpleDatabase(UNITTEST + "subspace-simple.csv", 600);
-        Database db = makeSimpleDatabase(UNITTEST + "my_subspace_test.csv", 18);
+        Database db = makeSimpleDatabase(UNITTEST + "test_data.csv", 18);
 
         ListParameterization params = new ListParameterization();
-        params.addParameter(CLIQUE.TAU_ID, "0.1");
+        params.addParameter(CLIQUE.TAU_ID, "0.05");
         params.addParameter(CLIQUE.XSI_ID, 20);
 
         // setup algorithm
@@ -64,19 +64,45 @@ public class CliqueTest {
 
             if(cl.getModel().getSubspace() instanceof CLIQUESubspace) {
                 CLIQUESubspace cliqueSubspace = (CLIQUESubspace) cl.getModel().getSubspace();
-                System.out.println("Subspace");
+                System.out.print(" -- Subspace -- \n");
                 List<CLIQUEUnit> units = cliqueSubspace.getDenseUnits();
+                System.out.println("Coverage: " + cliqueSubspace.getCoverage());
+
+                System.out.println("Dimension: " + cliqueSubspace.dimensonsToString());
+                System.out.println("Dimension: " + cliqueSubspace.dimensionality());
+
+                double dimensions[][] = new double[cliqueSubspace.dimensionality()][2];
+                for (double[] row: dimensions){
+                    row[0] = Double.MAX_VALUE;
+                    row[1] = Double.MIN_VALUE;
+                }
+
                 for (CLIQUEUnit unit : units) {
-                    System.out.println("Unit");
+
+                    System.out.print("\t -- Unit -- \n");
+                    System.out.println("\tFeature vectors: " + unit.numberOfFeatureVectors());
+                    System.out.println("\tSelectivity: " + unit.selectivity(unit.numberOfFeatureVectors()));
                     ArrayList<CLIQUEInterval> intervals = unit.getIntervals();
+
+                    int k = 0;
                     for (CLIQUEInterval interval : intervals) {
-                        System.out.print("Dimension: " + interval.getDimension() + ", ");
-                        System.out.print("Max: " + interval.getMax() + ", ");
-                        System.out.println("Min: " + interval.getMin());
+                        System.out.print("\t\t -- Interval -- \n");
+                        System.out.print("\t\tDimension: " + interval.getDimension() + ", ");
+                        System.out.print("\t\tMax: " + interval.getMax() + ", ");
+                        System.out.println("\t\tMin: " + interval.getMin());
+
+                        dimensions[k][0] = Math.min(dimensions[k][0], interval.getMin());
+                        dimensions[k][1] = Math.max(dimensions[k][1], interval.getMax());
+                        k++;
                     }
                 }
-            }
+                for (double[] dimension : dimensions) {
+                    System.out.print("\t\t -- Combined Interval -- \n");
+                    System.out.print("\t\t\t Min: " + dimension[0]);
+                    System.out.println("\t\t\t Max: " + dimension[1]);
+                }
 
+            }
 
         }
 
