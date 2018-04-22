@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class GenericExpressionVisitor implements ExpressionVisitor {
 
-    private Map<String, MyIntervalTree> intervalTrees;
+    private Map<String, IntervalTree> intervalTrees;
 
     private int extractedValue; // ToDo: Only integers are considered as of now
 
@@ -26,7 +26,7 @@ public class GenericExpressionVisitor implements ExpressionVisitor {
     private boolean isInterval;
 
 
-    public GenericExpressionVisitor(Map<String, MyIntervalTree> trees){
+    public GenericExpressionVisitor(Map<String, IntervalTree> trees){
         intervalTrees = trees;
         extractedValue = 0;
         extractedColumn = "";
@@ -120,7 +120,7 @@ public class GenericExpressionVisitor implements ExpressionVisitor {
         // ToDo: identical columns must be part of same AND expression (i.e. A > 2 AND A < 4, not A > 2 AND B > 1 AND A < 5)
         if (leftCol.equalsIgnoreCase(rightCol)){
             // ToDo: maybe check that start is smaller than end?
-            intervalTrees.get(rightCol).insert(new MyIntervalTree.Interval(start, end));
+            intervalTrees.get(rightCol).insert(new IntervalTree.Interval(start, end));
         }
         else{
             // ToDo: no support for infinity yet...
@@ -147,7 +147,7 @@ public class GenericExpressionVisitor implements ExpressionVisitor {
         equalsTo.getLeftExpression().accept(this);
         equalsTo.getRightExpression().accept(this);
 
-        intervalTrees.get(extractedColumn).insert(new MyIntervalTree.Point(extractedValue));
+        intervalTrees.get(extractedColumn).insert(new IntervalTree.Point(extractedValue));
     }
 
     public void visit(GreaterThan greaterThan) {

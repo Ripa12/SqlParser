@@ -3,11 +3,14 @@ package SqlParser;
 
 import org.apache.commons.lang3.SystemUtils;
 
+import javax.management.relation.Relation;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 
 /**
@@ -84,22 +87,6 @@ public class QueryGenerator {
 
             for(int i = 0; i < NR_OF_Q; i++) {
                 if (false) {
-//            if (rand.nextInt(3) > 0) {
-//                int start;
-//                int end;
-//
-//                int random = rand.nextInt(101);
-//                if (random <= 67) { //This is 20% more
-//                    start = rand.nextInt((FIRST_UPPER_BOUND - FIRST_LOWER_BOUND) + 1) + FIRST_LOWER_BOUND;
-//                    end = rand.nextInt((FIRST_UPPER_BOUND - start) + 1) + start;
-//                } else if (random <= 89) {
-//                    start = rand.nextInt((SECOND_UPPER_BOUND - SECOND_LOWER_BOUND) + 1) + SECOND_LOWER_BOUND;
-//                    end = rand.nextInt((SECOND_UPPER_BOUND - start) + 1) + start;
-//                } else {
-//                    start = rand.nextInt(MAX_UPPER_BOUND);
-//                    end = rand.nextInt((MAX_UPPER_BOUND - start) + 1) + start;
-//                }
-
                 } else {
                     int random;
                     int[] row = new int[3];
@@ -135,5 +122,35 @@ public class QueryGenerator {
                 out.close();
             }
         }
+    }
+
+    public static MyRelation<MyVector> csvToRelation(String fname){
+
+        String path = String.valueOf(ClassLoader.getSystemClassLoader().getResource(fname).getPath());
+        if (SystemUtils.IS_OS_WINDOWS) {
+            path = path.replaceFirst("/", "");
+        }
+
+        MyRelation<MyVector> relation = null;
+
+        try(BufferedReader br = new BufferedReader(new FileReader(path))) {
+            relation = new MyRelation<>(3);
+            for(String line; (line = br.readLine()) != null; ) {
+                String[] strCols = line.split(" ");
+                int[] intCols = new int[strCols.length];
+
+                for(int i = 0; i < strCols.length; i++){
+                    intCols[i] = Integer.parseInt(strCols[i]);
+                }
+
+                relation.insert(new MyVector(intCols));
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return relation;
     }
 }
