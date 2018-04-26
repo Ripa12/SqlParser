@@ -1,18 +1,23 @@
 package SqlParser;
 
+import de.lmu.ifi.dbs.elki.algorithm.clustering.subspace.clique.CLIQUEInterval;
 import de.lmu.ifi.dbs.elki.data.NumberVector;
 import de.lmu.ifi.dbs.elki.math.linearalgebra.Vector;
+
+import java.util.ArrayList;
 
 /**
  * Created by Richard on 2018-04-22.
  */
-public class MyVector implements NumberVector {
+public abstract class MyVector implements NumberVector {
 
-    int[] vector;
+    protected int[] vector;
 
     public MyVector(int[] v){
         this.vector = v;
     }
+
+    public abstract boolean isContained(ArrayList<CLIQUEInterval> intervals);
 
     @Override
     public int getDimensionality() {

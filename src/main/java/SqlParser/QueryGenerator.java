@@ -64,16 +64,16 @@ public class QueryGenerator {
     private final static int NR_OF_Q = 50000;
     private final static int MAX_DUPLICATES = 50;
 
-    private final static int MAX_UPPER_BOUND = 1000;
+    private final static int MAX_UPPER_BOUND = 99999999;
 
-    private final static int FIRST_LOWER_BOUND = 260;
-    private final static int FIRST_UPPER_BOUND = 450;
+    private final static int FIRST_LOWER_BOUND = 0;
+    private final static int FIRST_UPPER_BOUND = 250;
 
-    private final static int SECOND_LOWER_BOUND = 720;
-    private final static int SECOND_UPPER_BOUND = 750;
+    private final static int SECOND_LOWER_BOUND = 150000;
+    private final static int SECOND_UPPER_BOUND = 152000;
 
     static void generateCSV(String filename){
-        String path = String.valueOf(ClassLoader.getSystemClassLoader().getResource(filename).getPath());
+        String path = String.valueOf(QueryGenerator.class.getClassLoader().getResource(filename).getPath());
         if (SystemUtils.IS_OS_WINDOWS) {
             path = path.replaceFirst("/", "");
         }
@@ -126,7 +126,7 @@ public class QueryGenerator {
 
     public static MyRelation<MyVector> csvToRelation(String fname){
 
-        String path = String.valueOf(ClassLoader.getSystemClassLoader().getResource(fname).getPath());
+        String path = String.valueOf(QueryGenerator.class.getClassLoader().getResource(fname).getPath());
         if (SystemUtils.IS_OS_WINDOWS) {
             path = path.replaceFirst("/", "");
         }
@@ -143,7 +143,7 @@ public class QueryGenerator {
                     intCols[i] = Integer.parseInt(strCols[i]);
                 }
 
-                relation.insert(new MyVector(intCols));
+                relation.insert(new MyPoint(intCols));
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

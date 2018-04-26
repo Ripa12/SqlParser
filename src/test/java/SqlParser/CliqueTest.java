@@ -50,7 +50,7 @@ public class CliqueTest {
 //        testParameterizationOk(params);
 
         // run CLIQUE on database
-        Clustering<SubspaceModel> result = new Clique<MyVector>(20, .05, true).run(rel);
+        Clustering<SubspaceModel> result = new CLIQUE<MyVector>(1000, .05, true).run(rel);
 
         List<Integer> sizes = new java.util.ArrayList<>();
         for (Cluster<SubspaceModel> cl : result.getAllClusters()) {
