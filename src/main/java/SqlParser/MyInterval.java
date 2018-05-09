@@ -16,10 +16,20 @@ public class MyInterval extends MyVector {
     @Override
     public boolean isContained(ArrayList<CLIQUEInterval> intervals) {
         for(CLIQUEInterval interval : intervals) {
-            if(interval.getMin() > vector[interval.getDimension()] || upperBound[interval.getDimension()] >= interval.getMax()) {
+            if(interval.getMin() > upperBound[interval.getDimension()] || vector[interval.getDimension()] >= interval.getMax()) {
                 return false;
             }
         }
         return true;
+    }
+
+    @Override
+    public double getMax(int i) {
+        return upperBound[i];
+    }
+
+    @Override
+    public double getMin(int i) {
+        return super.getMin(i);
     }
 }

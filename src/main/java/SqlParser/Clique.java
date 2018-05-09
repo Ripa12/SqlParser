@@ -97,7 +97,7 @@ import de.lmu.ifi.dbs.elki.utilities.pairs.Pair;
 @Title("CLIQUE: Automatic Subspace Clustering of High Dimensional Data for Data Mining Applications")
 @Description("Grid-based algorithm to identify dense clusters in subspaces of maximum dimensionality.")
 @Reference(authors = "R. Agrawal, J. Gehrke, D. Gunopulos, P. Raghavan", title = "Automatic Subspace Clustering of High Dimensional Data for Data Mining Applications", booktitle = "Proc. SIGMOD Conference, Seattle, WA, 1998", url = "http://dx.doi.org/10.1145/276304.276314")
-public class Clique<V extends NumberVector> extends AbstractAlgorithm<Clustering<SubspaceModel>> implements SubspaceClusteringAlgorithm<SubspaceModel> {
+public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<SubspaceModel>> implements SubspaceClusteringAlgorithm<SubspaceModel> {
     /**
      * The logger for this class.
      */
@@ -369,12 +369,21 @@ public class Clique<V extends NumberVector> extends AbstractAlgorithm<Clustering
             throw new IllegalArgumentException("FeatureVectors differ in length.");
         }
         for(int d = 0; d < featureVector.getDimensionality(); d++) {
-            if((featureVector.doubleValue(d)) > maxima[d]) {
-                maxima[d] = (featureVector.doubleValue(d));
+            if((featureVector.getMax(d)) > maxima[d]) {
+                maxima[d] = (featureVector.getMax(d));
             }
-            if((featureVector.doubleValue(d)) < minima[d]) {
-                minima[d] = (featureVector.doubleValue(d));
+            if((featureVector.getMin(d)) < minima[d]) {
+                minima[d] = (featureVector.getMin(d));
             }
+//            if((featureVector.doubleValue(d)) > maxima[d]) {
+//                maxima[d] = (featureVector.doubleValue(d));
+//            }
+//            if((featureVector.doubleValue(d)) < minima[d]) {
+//                minima[d] = (featureVector.doubleValue(d));
+//            }
+
+
+
         }
     }
 

@@ -61,16 +61,16 @@ public class QueryGenerator {
         return stmts.toString();
     }
 
-    private final static int NR_OF_Q = 50000;
-    private final static int MAX_DUPLICATES = 50;
+    private final static int NR_OF_Q = 500;
+    private final static int MAX_DUPLICATES = 10;
 
-    private final static int MAX_UPPER_BOUND = 99999999;
+    private final static int MAX_UPPER_BOUND = 252000;
 
     private final static int FIRST_LOWER_BOUND = 0;
     private final static int FIRST_UPPER_BOUND = 250;
 
     private final static int SECOND_LOWER_BOUND = 150000;
-    private final static int SECOND_UPPER_BOUND = 152000;
+    private final static int SECOND_UPPER_BOUND = 160000;
 
     static void generateCSV(String filename){
         String path = String.valueOf(QueryGenerator.class.getClassLoader().getResource(filename).getPath());
@@ -86,7 +86,38 @@ public class QueryGenerator {
             Random rand = new Random();
 
             for(int i = 0; i < NR_OF_Q; i++) {
-                if (false) {
+                if (true) {
+
+                    int random;
+                    int[] start = new int[3];
+                    int[] end = new int[3];
+
+                    for (int k = 0; k < 3; k++) {
+                        random = rand.nextInt(101);
+                        if (random <= 70) { //This is 20% more
+//                            start[k] = rand.nextInt((FIRST_UPPER_BOUND - FIRST_LOWER_BOUND) + 1) + FIRST_LOWER_BOUND;
+//                            end[k] = rand.nextInt((FIRST_UPPER_BOUND - start[k]) + 1) + start[k];
+                            start[k] = FIRST_LOWER_BOUND;
+                            end[k] = FIRST_UPPER_BOUND;
+                        } else if (random <= 101) {
+//                            start[k] = rand.nextInt((SECOND_UPPER_BOUND - SECOND_LOWER_BOUND) + 1) + SECOND_LOWER_BOUND;
+//                            end[k] = rand.nextInt((SECOND_UPPER_BOUND - start[k]) + 1) + start[k];
+                            start[k] = SECOND_LOWER_BOUND;
+                            end[k] = SECOND_UPPER_BOUND;
+                        } else {
+//                            start[k] = rand.nextInt(MAX_UPPER_BOUND);
+//                            end[k] = rand.nextInt((MAX_UPPER_BOUND - start[k]) + 1) + start[k];
+                        }
+                    }
+
+                    int total = 1;
+                    if (rand.nextInt(10) > 0)
+                        total = rand.nextInt(MAX_DUPLICATES)+1;
+                    for (int t = 0; t < total; t++) {
+                        out.print(String.format("%d %d %d %d %d %d%n", start[0], start[1], start[2], end[0], end[1], end[2]));
+                    }
+
+
                 } else {
                     int random;
                     int[] row = new int[3];
@@ -139,11 +170,23 @@ public class QueryGenerator {
                 String[] strCols = line.split(" ");
                 int[] intCols = new int[strCols.length];
 
-                for(int i = 0; i < strCols.length; i++){
-                    intCols[i] = Integer.parseInt(strCols[i]);
+                MyVector vec;
+
+                if (intCols.length == 3) {
+                    for (int i = 0; i < strCols.length; i++) {
+                        intCols[i] = Integer.parseInt(strCols[i]);
+                    }
+                    vec = new MyPoint(intCols);
+                }
+                else{
+                    for (int i = 0; i < (strCols.length-3); i++) {
+                        intCols[i] = Integer.parseInt(strCols[i]);
+                        intCols[i+3] = Integer.parseInt(strCols[i+3]);
+                    }
+                    vec = new MyInterval(Arrays.copyOfRange(intCols, 0, 3), Arrays.copyOfRange(intCols, 3, 6));
                 }
 
-                relation.insert(new MyPoint(intCols));
+                relation.insert(vec);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

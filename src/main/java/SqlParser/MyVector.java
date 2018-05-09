@@ -26,12 +26,12 @@ public abstract class MyVector implements NumberVector {
 
     @Override
     public double getMin(int i) {
-        return 0;
+        return vector[i];
     }
 
     @Override
     public double getMax(int i) {
-        return 0;
+        return vector[i];
     }
 
     @Override
