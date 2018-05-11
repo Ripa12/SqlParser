@@ -97,18 +97,32 @@ public class QueryGenerator {
                         if (random <= 90) { //This is 20% more
 //                            start[k] = rand.nextInt((FIRST_UPPER_BOUND - FIRST_LOWER_BOUND) + 1) + FIRST_LOWER_BOUND;
 //                            end[k] = rand.nextInt((FIRST_UPPER_BOUND - start[k]) + 1) + start[k];
-                            start[k] = FIRST_LOWER_BOUND;
-                            end[k] = FIRST_UPPER_BOUND;
+
+//                            start[k] = FIRST_LOWER_BOUND;
+//                            end[k] = FIRST_UPPER_BOUND;
+
+                            start[0] = FIRST_LOWER_BOUND;
+                            end[0] = FIRST_UPPER_BOUND;
+                            start[1] = SECOND_LOWER_BOUND;
+                            end[1] = SECOND_UPPER_BOUND;
                         } else if (random <= 101) {
 //                            start[k] = rand.nextInt((SECOND_UPPER_BOUND - SECOND_LOWER_BOUND) + 1) + SECOND_LOWER_BOUND;
 //                            end[k] = rand.nextInt((SECOND_UPPER_BOUND - start[k]) + 1) + start[k];
-                            start[k] = SECOND_LOWER_BOUND;
-                            end[k] = SECOND_UPPER_BOUND;
+
+//                            start[k] = SECOND_LOWER_BOUND;
+//                            end[k] = SECOND_UPPER_BOUND;
+
+                            start[0] = SECOND_LOWER_BOUND;
+                            end[0] = SECOND_UPPER_BOUND;
+                            start[1] = FIRST_LOWER_BOUND;
+                            end[1] = FIRST_UPPER_BOUND;
                         } else {
 //                            start[k] = rand.nextInt(MAX_UPPER_BOUND);
 //                            end[k] = rand.nextInt((MAX_UPPER_BOUND - start[k]) + 1) + start[k];
                         }
                     }
+
+
 
                     int total = 1;
                     if (rand.nextInt(10) > 0)

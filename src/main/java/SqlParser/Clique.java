@@ -458,6 +458,14 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
                 ExtendedCLIQUESubspace<V> s = s1.join(s2, all, tau);
                 if(s != null) {
                     denseSubspaceCandidates.add(s);
+
+                    for(DBIDIter it = database.iterDBIDs(); it.valid(); it.advance()) {
+                        V featureVector = database.get(it);
+                        for(ExtendedCliqueUnit<V> unit : s.getDenseUnits()) {
+                            unit.addFeatureVector(it, featureVector);
+                        }
+                    }
+
                 }
             }
         }

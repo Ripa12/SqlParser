@@ -6,6 +6,8 @@ import de.lmu.ifi.dbs.elki.database.ids.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ExtendedCliqueUnit<V extends MyVector> {
     /**
@@ -17,13 +19,14 @@ public class ExtendedCliqueUnit<V extends MyVector> {
      * The ids of the feature vectors this unit contains.
      */
 //    private ModifiableDBIDs ids;
+    private List<V> featuredVectors;
 
     /**
      * Flag that indicates if this unit is already assigned to a cluster.
      */
     private boolean assigned;
 
-    private int coverage;
+//    private int coverage;
 
     /**
      * Creates a new k-dimensional unit for the given intervals.
@@ -33,7 +36,8 @@ public class ExtendedCliqueUnit<V extends MyVector> {
     private ExtendedCliqueUnit(ArrayList<CLIQUEInterval> intervals, int c) {
         this.intervals = intervals;
         assigned = false;
-        this.coverage = c;
+//        this.coverage = c;
+        this.featuredVectors = new LinkedList<>();
     }
 
     /**
@@ -45,7 +49,8 @@ public class ExtendedCliqueUnit<V extends MyVector> {
         intervals = new ArrayList<>();
         intervals.add(interval);
         assigned = false;
-        this.coverage = 0;
+//        this.coverage = 0;
+        this.featuredVectors = new LinkedList<>();
     }
 
     /**
@@ -72,7 +77,8 @@ public class ExtendedCliqueUnit<V extends MyVector> {
     public boolean addFeatureVector(DBIDRef id, V vector) {
         if(contains(vector)) {
 //            ids.add(id);
-            coverage++;
+            featuredVectors.add(vector);
+//            coverage++;
             return true;
         }
         return false;
@@ -84,7 +90,8 @@ public class ExtendedCliqueUnit<V extends MyVector> {
      * @return the number of feature vectors this unit contains
      */
     public int numberOfFeatureVectors() {
-        return coverage;
+        return featuredVectors.size();
+//        return coverage;
     }
 
     /**
@@ -95,7 +102,8 @@ public class ExtendedCliqueUnit<V extends MyVector> {
      * @return the selectivity of this unit
      */
     public double selectivity(double total) {
-        return ((double)coverage) / total;
+        return ((double)featuredVectors.size()) / total;
+//        return ((double)coverage) / total;
     }
 
     /**
@@ -208,8 +216,18 @@ public class ExtendedCliqueUnit<V extends MyVector> {
 //        HashSetModifiableDBIDs resultIDs = DBIDUtil.newHashSet(this.ids);
 //        resultIDs.retainAll(other.ids);
 
-        if(((double)(this.coverage + other.coverage)) / all >= tau) {
-            return new ExtendedCliqueUnit<>(resultIntervals, (this.coverage + other.coverage));
+        ExtendedCliqueUnit newUnit = new ExtendedCliqueUnit<>(resultIntervals, 0);
+
+        for(V thisVec : this.featuredVectors){
+            newUnit.addFeatureVector(null, thisVec);
+        }
+        for (V otherVec : other.featuredVectors) {
+            newUnit.addFeatureVector(null, otherVec);
+        }
+
+        if((double)(newUnit.featuredVectors.size()) / all >= tau) {
+//            return new ExtendedCliqueUnit<>(resultIntervals, (this.coverage + other.coverage));
+            return newUnit;
         }
 
         return null;
