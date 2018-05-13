@@ -24,6 +24,14 @@ public class MyInterval extends MyVector {
     }
 
     @Override
+    public boolean isContained(double min, double max, int dim) {
+        if(min > upperBound[dim] || vector[dim] >= max) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public double getMax(int i) {
         return upperBound[i];
     }

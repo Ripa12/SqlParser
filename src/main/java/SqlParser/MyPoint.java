@@ -20,4 +20,13 @@ public class MyPoint extends MyVector{
         }
         return true;
     }
+
+    @Override
+    public boolean isContained(double min, double max, int dim) {
+        final double value = doubleValue(dim);
+        if(min > value || value >= max) {
+            return false;
+        }
+        return true;
+    }
 }

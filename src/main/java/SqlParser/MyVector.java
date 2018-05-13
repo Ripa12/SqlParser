@@ -18,6 +18,7 @@ public abstract class MyVector implements NumberVector {
     }
 
     public abstract boolean isContained(ArrayList<CLIQUEInterval> intervals);
+    public abstract boolean isContained(double min, double max, int dim);
 
     @Override
     public int getDimensionality() {

@@ -63,6 +63,21 @@ public class ExtendedCLIQUESubspace<V extends MyVector> extends Subspace {
     private double[] lowerBounds;
     private double[] maximumBounds;
 
+    boolean isContained(MyVector other){
+        if(other.getDimensionality() != dimensionality())
+            return false;
+
+        final long[] dims = getDimensions();
+        for(int dim = BitsUtil.nextSetBit(dims, 0); dim >= 0; dim = BitsUtil.nextSetBit(dims, dim + 1)) {
+            if(!other.isContained(lowerBounds[dim], maximumBounds[dim], dim)){
+                return false;
+            }
+        }
+
+        coverage++;
+        return true;
+    }
+
     /**
      * Creates a new one-dimensional subspace of the original data space.
      *
@@ -100,6 +115,10 @@ public class ExtendedCLIQUESubspace<V extends MyVector> extends Subspace {
         }
     }
 
+    public void resetCoverage(){
+        this.coverage = 0;
+    }
+
     // ToDo: Temporary logger
     public void outputBounds(){
         for (int i = 0; i < lowerBounds.length; i++) {
@@ -128,7 +147,6 @@ public class ExtendedCLIQUESubspace<V extends MyVector> extends Subspace {
 
         getDenseUnits().add(unit);
         coverage += unit.numberOfFeatureVectors();
-
     }
 
     /**
@@ -146,6 +164,8 @@ public class ExtendedCLIQUESubspace<V extends MyVector> extends Subspace {
                 ExtendedCLIQUESubspace<V> model = new ExtendedCLIQUESubspace<>(getDimensions());
                 clusters.add(new Pair<Subspace, ModifiableDBIDs>(model, cluster));
                 dfs(unit, cluster, model);
+
+                //model.coverage = 0; // ToDo: Nicer solution?
             }
         }
         return clusters;
@@ -163,17 +183,19 @@ public class ExtendedCLIQUESubspace<V extends MyVector> extends Subspace {
     public void dfs(ExtendedCliqueUnit<V> unit, ModifiableDBIDs cluster, ExtendedCLIQUESubspace<V> model) {
 //        cluster.addDBIDs(unit.getIds());
         unit.markAsAssigned();
-        model.addDenseUnit(unit);
+        model.addDenseUnit(unit); // 17.50 && 103
 
         final long[] dims = getDimensions();
         for(int dim = BitsUtil.nextSetBit(dims, 0); dim >= 0; dim = BitsUtil.nextSetBit(dims, dim + 1)) {
-            ExtendedCliqueUnit<V> left = leftNeighbor(unit, dim);
-            if(left != null && !left.isAssigned()) {
+//            ExtendedCliqueUnit<V> left = leftNeighbor(unit, dim);
+        ExtendedCliqueUnit<V> left = leftAdjacentNeighbor(unit, dim);
+            if(left != null){// && !left.isAssigned()) {
                 dfs(left, cluster, model);
             }
 
-            ExtendedCliqueUnit<V> right = rightNeighbor(unit, dim);
-            if(right != null && !right.isAssigned()) {
+//            ExtendedCliqueUnit<V> right = rightNeighbor(unit, dim);
+        ExtendedCliqueUnit<V> right = rightAdjacentNeighbor(unit, dim);
+            if(right != null){// && !right.isAssigned()) {
                 dfs(right, cluster, model);
             }
         }
@@ -190,12 +212,22 @@ public class ExtendedCLIQUESubspace<V extends MyVector> extends Subspace {
         CLIQUEInterval i = unit.getInterval(dim);
 
         for(ExtendedCliqueUnit<V> u : getDenseUnits()) {
-            if(u.containsLeftNeighbor(i)) {
+            if(!u.isAssigned() && u.containsLeftNeighbor(i)) {
                 return u;
             }
         }
         return null;
     }
+
+    public ExtendedCliqueUnit<V> leftAdjacentNeighbor(ExtendedCliqueUnit<V> unit, int dim) {
+        for(ExtendedCliqueUnit<V> u : getDenseUnits()) {
+            if(!u.isAssigned() && u.containsLeftNeighbor(unit.getIntervals(), dim)) {
+                return u;
+            }
+        }
+        return null;
+    }
+
 
     /**
      * Returns the right neighbor of the given unit in the specified dimension.
@@ -208,7 +240,16 @@ public class ExtendedCLIQUESubspace<V extends MyVector> extends Subspace {
         CLIQUEInterval i = unit.getInterval(dim);
 
         for(ExtendedCliqueUnit<V> u : getDenseUnits()) {
-            if(u.containsRightNeighbor(i)) {
+            if(u.containsRightNeighbor(i) && !u.isAssigned()) {
+                return u;
+            }
+        }
+        return null;
+    }
+
+    public ExtendedCliqueUnit<V> rightAdjacentNeighbor(ExtendedCliqueUnit<V> unit, Integer dim) {
+        for(ExtendedCliqueUnit<V> u : getDenseUnits()) {
+            if(!u.isAssigned() && u.containsRightNeighbor(unit.getIntervals(), dim)) {
                 return u;
             }
         }

@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 
 import de.lmu.ifi.dbs.elki.algorithm.AbstractAlgorithm;
 import de.lmu.ifi.dbs.elki.algorithm.clustering.subspace.CLIQUE;
@@ -184,6 +185,7 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
             }
         }
 
+        long startTime = System.nanoTime();
         int dimensionality = RelationUtil.dimensionality(relation);
         for(int k = 2; k <= dimensionality && !denseSubspaces.isEmpty(); k++) {
             denseSubspaces = findDenseSubspaces(relation, denseSubspaces);
@@ -197,6 +199,7 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
                 }
             }
         }
+        System.out.println("Find multi-dimensionality: " + (System.nanoTime() - startTime) / 1000000000.0);
 
         // 2. Identification of clusters
         if(LOG.isVerbose()) {
@@ -213,12 +216,29 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
                 LOG.verbose("    " + (dim + 1) + "-dimensional clusters: " + modelsAndClusters.size());
             }
 
+
             for(Pair<Subspace, ModifiableDBIDs> modelAndCluster : modelsAndClusters) {
-                Cluster<SubspaceModel> newCluster = new Cluster<>(modelAndCluster.second);
-                newCluster.setModel(new SubspaceModel(modelAndCluster.first, Centroid.make(relation, modelAndCluster.second)));
-                newCluster.setName("cluster_" + numClusters++);
-                result.addToplevelCluster(newCluster);
+
+                ((ExtendedCLIQUESubspace)modelAndCluster.getFirst()).resetCoverage();
+
+                startTime = System.nanoTime();
+                // ToDo: No need to loop over all vectors if model's dimensionality is below maximum
+                for(DBIDIter it = relation.iterDBIDs(); it.valid(); it.advance()) {
+                    V featureVector = relation.get(it);
+                    ((ExtendedCLIQUESubspace)modelAndCluster.getFirst()).isContained(featureVector);
+                }
+                System.out.println("Prune clusters: " + (System.nanoTime() - startTime) / 1000000000.0);
+
+                // ToDo: Are too many candidate clusters created before being pruned?
+                if(((ExtendedCLIQUESubspace)modelAndCluster.getFirst()).getCoverage() / ((double)relation.size()) >= tau){
+//                if(true){
+                    Cluster<SubspaceModel> newCluster = new Cluster<>(modelAndCluster.second);
+                    newCluster.setModel(new SubspaceModel(modelAndCluster.first, Centroid.make(relation, modelAndCluster.second)));
+                    newCluster.setName("cluster_" + numClusters++);
+                    result.addToplevelCluster(newCluster);
+                }
             }
+
         }
 
         return result;

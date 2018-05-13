@@ -18,31 +18,20 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package de.lmu.ifi.dbs.elki.algorithm.clustering.subspace;
+package SqlParser;
 
-import SqlParser.ExtendedCLIQUESubspace;
-import SqlParser.ExtendedCliqueUnit;
-import SqlParser.MyVector;
-import SqlParser.QueryGenerator;
-import de.lmu.ifi.dbs.elki.algorithm.clustering.DBSCAN;
 import de.lmu.ifi.dbs.elki.algorithm.clustering.GriDBSCAN;
-import de.lmu.ifi.dbs.elki.algorithm.clustering.correlation.LMCLUS;
-import de.lmu.ifi.dbs.elki.algorithm.clustering.gdbscan.LSDBC;
-import de.lmu.ifi.dbs.elki.algorithm.clustering.subspace.clique.CLIQUEInterval;
+import de.lmu.ifi.dbs.elki.algorithm.clustering.subspace.DOC;
 import de.lmu.ifi.dbs.elki.data.Cluster;
-import de.lmu.ifi.dbs.elki.data.NumberVector;
+import de.lmu.ifi.dbs.elki.data.model.ClusterModel;
 import de.lmu.ifi.dbs.elki.data.model.Model;
-import de.lmu.ifi.dbs.elki.data.type.SimpleTypeInformation;
+import de.lmu.ifi.dbs.elki.data.model.SubspaceModel;
 import de.lmu.ifi.dbs.elki.data.type.TypeUtil;
-import de.lmu.ifi.dbs.elki.data.type.VectorFieldTypeInformation;
 import de.lmu.ifi.dbs.elki.database.StaticArrayDatabase;
 import de.lmu.ifi.dbs.elki.database.relation.Relation;
 import de.lmu.ifi.dbs.elki.datasource.FileBasedDatabaseConnection;
 import de.lmu.ifi.dbs.elki.datasource.filter.FixedDBIDsFilter;
-import de.lmu.ifi.dbs.elki.distance.distancefunction.NumberVectorDistanceFunction;
-import de.lmu.ifi.dbs.elki.distance.distancefunction.PrimitiveDistanceFunction;
 import de.lmu.ifi.dbs.elki.distance.distancefunction.minkowski.EuclideanDistanceFunction;
-import de.lmu.ifi.dbs.elki.distance.distancefunction.subspace.AbstractDimensionsSelectingDistanceFunction;
 import de.lmu.ifi.dbs.elki.math.random.RandomFactory;
 import de.lmu.ifi.dbs.elki.utilities.ClassGenericsUtil;
 import de.lmu.ifi.dbs.elki.utilities.optionhandling.parameterization.ListParameterization;
@@ -51,11 +40,11 @@ import org.junit.Test;
 
 import de.lmu.ifi.dbs.elki.data.Clustering;
 import de.lmu.ifi.dbs.elki.data.DoubleVector;
-import de.lmu.ifi.dbs.elki.data.model.SubspaceModel;
 import de.lmu.ifi.dbs.elki.database.Database;
+import smile.clustering.BIRCH;
+import smile.clustering.DENCLUE;
 
 
-import javax.print.Doc;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,17 +76,44 @@ public class SUBCLUTest {
      */
     @Test
     public void testSUBCLUResults() {
-        Database db = makeSimpleDatabase(UNITTEST + "3clusters-and-noise-2d.csv", 6070);
+//        Database db = makeSimpleDatabase(UNITTEST + "3clusters-and-noise-2d.csv", 6070);
+
+        Database db = makeSimpleDatabase(UNITTEST + "test_data.csv", 0);
+
+        double[][] d = new double[10][3];
+        d[0] = new double[]{1,1,1};
+        d[1] = new double[]{1,1,1};
+        d[2] = new double[]{1,1,1};
+        d[3] = new double[]{1,1,1};
+        d[4] = new double[]{1,1,1};
+        d[5] = new double[]{1,1,1};
+        d[6] = new double[]{1,1,1};
+        d[7] = new double[]{1,1,1};
+        d[8] = new double[]{100,100,100};
+        d[9] = new double[]{1,1,1};
+
+        BIRCH cl = new BIRCH(3, 2, 1);
+
+        for (double[] doubles : d) {
+            cl.add(doubles);
+        }
+
+        cl.partition(5);
+
+        double [][] res = cl.centroids();
+
+        System.out.print(3);
 
 //        Clustering<?> result = new DOC<DoubleVector>(.3, .5, .1, false, 0, new RandomFactory(2))
 //                .run(db);
 
 //        Clustering<Model> result = new LSDBC<MyVector>(EuclideanDistanceFunction.STATIC, 20, .4).run(db);
 
-        Clustering<Model> result = new LMCLUS(2, 100, 10, 0.9, new RandomFactory(6)).run(db);
+//        Clustering<Model> result = new LMCLUS(3, 100, 2, 0.3, new RandomFactory(6))
+//                .run(db);
 
-//        Clustering<Model> result = new GriDBSCAN<DoubleVector>
-//                .build().run(db);
+//        Clustering<Model> result = new GriDBSCAN<DoubleVector>(EuclideanDistanceFunction.STATIC, .1,
+//                30, 10).run(db);
 
 //        Clustering<?> result = new ELKIBuilder<DOC<DoubleVector>>(DOC.class) //
 //                .with(DOC.Parameterizer.RANDOM_ID, 0) //
@@ -105,56 +121,56 @@ public class SUBCLUTest {
 //                .with(DOC.Parameterizer.BETA_ID, 0.85) //
 //                .build().run(db);
 
-        for (Cluster<?> cl : result.getAllClusters()) {
+//        for (Cluster<?> cl : result.getAllClusters()) {
+//            System.out.println(((SubspaceModel)cl.getModel()).getMean());
+//            System.out.println(cl.getModel().getClass().getName());
+//            System.out.println(cl.getIDs().size());
+////            cl.getModel()
+//
+//
+////            if(cl.getModel().getSubspace() instanceof ExtendedCLIQUESubspace) {
+////                ExtendedCLIQUESubspace cliqueSubspace = (ExtendedCLIQUESubspace) cl.getModel().getSubspace();
+////                System.out.print(" -- Subspace -- \n");
+////                List<ExtendedCliqueUnit> units = cliqueSubspace.getDenseUnits();
+////                System.out.println("Coverage: " + cliqueSubspace.getCoverage());
+////
+////                System.out.println("Dimension: " + cliqueSubspace.dimensonsToString());
+////                System.out.println("Dimension: " + cliqueSubspace.dimensionality());
+////
+////                double dimensions[][] = new double[cliqueSubspace.dimensionality()][2];
+////                for (double[] row: dimensions){
+////                    row[0] = Double.MAX_VALUE;
+////                    row[1] = Double.MIN_VALUE;
+////                }
+////
+////                for (ExtendedCliqueUnit unit : units) {
+////
+////                    System.out.print("\t -- Unit -- \n");
+////                    System.out.println("\tFeature vectors: " + unit.numberOfFeatureVectors());
+////                    System.out.println("\tSelectivity: " + unit.selectivity(unit.numberOfFeatureVectors()));
+////                    ArrayList<CLIQUEInterval> intervals = unit.getIntervals();
+////
+////                    int k = 0;
+////                    for (CLIQUEInterval interval : intervals) {
+////                        System.out.print("\t\t -- Interval -- \n");
+////                        System.out.print("\t\tDimension: " + interval.getDimension() + ", ");
+////                        System.out.print("\t\tMax: " + interval.getMax() + ", ");
+////                        System.out.println("\t\tMin: " + interval.getMin());
+////
+////                        dimensions[k][0] = Math.min(dimensions[k][0], interval.getMin());
+////                        dimensions[k][1] = Math.max(dimensions[k][1], interval.getMax());
+////                        k++;
+////                    }
+////                }
+////                for (double[] dimension : dimensions) {
+////                    System.out.print("\t\t -- Combined Interval -- \n");
+////                    System.out.print("\t\t\t Min: " + dimension[0]);
+////                    System.out.println("\t\t\t Max: " + dimension[1]);
+////                }
+////
+////            }
 
-            System.out.println(cl.getClass().getName());
-
-//            cl.getModel()
-
-
-//            if(cl.getModel().getSubspace() instanceof ExtendedCLIQUESubspace) {
-//                ExtendedCLIQUESubspace cliqueSubspace = (ExtendedCLIQUESubspace) cl.getModel().getSubspace();
-//                System.out.print(" -- Subspace -- \n");
-//                List<ExtendedCliqueUnit> units = cliqueSubspace.getDenseUnits();
-//                System.out.println("Coverage: " + cliqueSubspace.getCoverage());
-//
-//                System.out.println("Dimension: " + cliqueSubspace.dimensonsToString());
-//                System.out.println("Dimension: " + cliqueSubspace.dimensionality());
-//
-//                double dimensions[][] = new double[cliqueSubspace.dimensionality()][2];
-//                for (double[] row: dimensions){
-//                    row[0] = Double.MAX_VALUE;
-//                    row[1] = Double.MIN_VALUE;
-//                }
-//
-//                for (ExtendedCliqueUnit unit : units) {
-//
-//                    System.out.print("\t -- Unit -- \n");
-//                    System.out.println("\tFeature vectors: " + unit.numberOfFeatureVectors());
-//                    System.out.println("\tSelectivity: " + unit.selectivity(unit.numberOfFeatureVectors()));
-//                    ArrayList<CLIQUEInterval> intervals = unit.getIntervals();
-//
-//                    int k = 0;
-//                    for (CLIQUEInterval interval : intervals) {
-//                        System.out.print("\t\t -- Interval -- \n");
-//                        System.out.print("\t\tDimension: " + interval.getDimension() + ", ");
-//                        System.out.print("\t\tMax: " + interval.getMax() + ", ");
-//                        System.out.println("\t\tMin: " + interval.getMin());
-//
-//                        dimensions[k][0] = Math.min(dimensions[k][0], interval.getMin());
-//                        dimensions[k][1] = Math.max(dimensions[k][1], interval.getMax());
-//                        k++;
-//                    }
-//                }
-//                for (double[] dimension : dimensions) {
-//                    System.out.print("\t\t -- Combined Interval -- \n");
-//                    System.out.print("\t\t\t Min: " + dimension[0]);
-//                    System.out.println("\t\t\t Max: " + dimension[1]);
-//                }
-//
-//            }
-
-        }
+//        }
     }
 
 

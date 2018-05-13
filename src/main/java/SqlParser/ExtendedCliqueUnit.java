@@ -19,14 +19,14 @@ public class ExtendedCliqueUnit<V extends MyVector> {
      * The ids of the feature vectors this unit contains.
      */
 //    private ModifiableDBIDs ids;
-    private List<V> featuredVectors;
+//    private List<V> featuredVectors;
 
     /**
      * Flag that indicates if this unit is already assigned to a cluster.
      */
     private boolean assigned;
 
-//    private int coverage;
+    private int coverage;
 
     /**
      * Creates a new k-dimensional unit for the given intervals.
@@ -36,8 +36,8 @@ public class ExtendedCliqueUnit<V extends MyVector> {
     private ExtendedCliqueUnit(ArrayList<CLIQUEInterval> intervals, int c) {
         this.intervals = intervals;
         assigned = false;
-//        this.coverage = c;
-        this.featuredVectors = new LinkedList<>();
+        this.coverage = c;
+//        this.featuredVectors = new LinkedList<>();
     }
 
     /**
@@ -49,8 +49,8 @@ public class ExtendedCliqueUnit<V extends MyVector> {
         intervals = new ArrayList<>();
         intervals.add(interval);
         assigned = false;
-//        this.coverage = 0;
-        this.featuredVectors = new LinkedList<>();
+        this.coverage = 0;
+//        this.featuredVectors = new LinkedList<>();
     }
 
     /**
@@ -77,8 +77,8 @@ public class ExtendedCliqueUnit<V extends MyVector> {
     public boolean addFeatureVector(DBIDRef id, V vector) {
         if(contains(vector)) {
 //            ids.add(id);
-            featuredVectors.add(vector);
-//            coverage++;
+//            featuredVectors.add(vector);
+            coverage++;
             return true;
         }
         return false;
@@ -90,8 +90,8 @@ public class ExtendedCliqueUnit<V extends MyVector> {
      * @return the number of feature vectors this unit contains
      */
     public int numberOfFeatureVectors() {
-        return featuredVectors.size();
-//        return coverage;
+//        return featuredVectors.size();
+        return coverage;
     }
 
     /**
@@ -102,8 +102,8 @@ public class ExtendedCliqueUnit<V extends MyVector> {
      * @return the selectivity of this unit
      */
     public double selectivity(double total) {
-        return ((double)featuredVectors.size()) / total;
-//        return ((double)coverage) / total;
+//        return ((double)featuredVectors.size()) / total;
+        return ((double)coverage) / total;
     }
 
     /**
@@ -144,6 +144,19 @@ public class ExtendedCliqueUnit<V extends MyVector> {
         return (interval != null) && (interval.getMax() == i.getMin());
     }
 
+    public boolean containsLeftNeighbor(ArrayList<CLIQUEInterval> i, int dim) {
+
+
+        for(int index = 0; index < intervals.size(); index++){
+            if(intervals.get(index).getMin() != i.get(index).getMin()){
+                if(index != dim || intervals.get(index).getMax() != i.get(index).getMin()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     /**
      * Returns true if this unit contains the right neighbor of the specified
      * interval.
@@ -155,6 +168,18 @@ public class ExtendedCliqueUnit<V extends MyVector> {
     public boolean containsRightNeighbor(CLIQUEInterval i) {
         CLIQUEInterval interval = getInterval(i.getDimension());
         return (interval != null) && (interval.getMin() == i.getMax());
+    }
+
+    public boolean containsRightNeighbor(ArrayList<CLIQUEInterval> i, int dim) {
+        for(int index = 0; index < intervals.size(); index++){
+            if(intervals.get(index).getMin() != i.get(index).getMin()){
+                if(index != dim || intervals.get(index).getMin() != i.get(index).getMax()) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -216,21 +241,13 @@ public class ExtendedCliqueUnit<V extends MyVector> {
 //        HashSetModifiableDBIDs resultIDs = DBIDUtil.newHashSet(this.ids);
 //        resultIDs.retainAll(other.ids);
 
-        ExtendedCliqueUnit newUnit = new ExtendedCliqueUnit<>(resultIntervals, 0);
-
-        for(V thisVec : this.featuredVectors){
-            newUnit.addFeatureVector(null, thisVec);
-        }
-        for (V otherVec : other.featuredVectors) {
-            newUnit.addFeatureVector(null, otherVec);
-        }
-
-        if((double)(newUnit.featuredVectors.size()) / all >= tau) {
+        // ToDo: Is this necessary?
+//        if(((double)(this.coverage + other.coverage)) / all >= tau) {
 //            return new ExtendedCliqueUnit<>(resultIntervals, (this.coverage + other.coverage));
-            return newUnit;
-        }
+//        }
 
-        return null;
+        return new ExtendedCliqueUnit<>(resultIntervals, (this.coverage + other.coverage));
+//        return null;
     }
 
     /**
