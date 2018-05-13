@@ -85,14 +85,12 @@ import de.lmu.ifi.dbs.elki.utilities.pairs.Pair;
  * In Proc. ACM SIGMOD Int. Conf. on Management of Data, Seattle, WA, 1998.
  * </p>
  *
+ * @param <V> the type of NumberVector handled by this Algorithm
  * @author Elke Achtert
- * @since 0.2
- *
  * @apiviz.has SubspaceModel
  * @apiviz.has ExtendedCLIQUESubspace
  * @apiviz.uses ExtendedCliqueUnit
- *
- * @param <V> the type of NumberVector handled by this Algorithm
+ * @since 0.2
  */
 @Title("CLIQUE: Automatic Subspace Clustering of High Dimensional Data for Data Mining Applications")
 @Description("Grid-based algorithm to identify dense clusters in subspaces of maximum dimensionality.")
@@ -150,8 +148,8 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
     /**
      * Constructor.
      *
-     * @param xsi Xsi value
-     * @param tau Tau value
+     * @param xsi   Xsi value
+     * @param tau   Tau value
      * @param prune Prune flag
      */
     public Clique(int xsi, double tau, boolean prune) {
@@ -170,31 +168,31 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
     public Clustering<SubspaceModel> run(Relation<V> relation) {
         // 1. Identification of subspaces that contain clusters
         // TODO: use step logging.
-        if(LOG.isVerbose()) {
+        if (LOG.isVerbose()) {
             LOG.verbose("*** 1. Identification of subspaces that contain clusters ***");
         }
         SortedMap<Integer, List<ExtendedCLIQUESubspace<V>>> dimensionToDenseSubspaces = new TreeMap<>();
         List<ExtendedCLIQUESubspace<V>> denseSubspaces = findOneDimensionalDenseSubspaces(relation);
         dimensionToDenseSubspaces.put(Integer.valueOf(0), denseSubspaces);
-        if(LOG.isVerbose()) {
+        if (LOG.isVerbose()) {
             LOG.verbose("    1-dimensional dense subspaces: " + denseSubspaces.size());
         }
-        if(LOG.isDebugging()) {
-            for(ExtendedCLIQUESubspace<V> s : denseSubspaces) {
+        if (LOG.isDebugging()) {
+            for (ExtendedCLIQUESubspace<V> s : denseSubspaces) {
                 LOG.debug(s.toString("      "));
             }
         }
 
         long startTime = System.nanoTime();
         int dimensionality = RelationUtil.dimensionality(relation);
-        for(int k = 2; k <= dimensionality && !denseSubspaces.isEmpty(); k++) {
+        for (int k = 2; k <= dimensionality && !denseSubspaces.isEmpty(); k++) {
             denseSubspaces = findDenseSubspaces(relation, denseSubspaces);
             dimensionToDenseSubspaces.put(Integer.valueOf(k - 1), denseSubspaces);
-            if(LOG.isVerbose()) {
+            if (LOG.isVerbose()) {
                 LOG.verbose("    " + k + "-dimensional dense subspaces: " + denseSubspaces.size());
             }
-            if(LOG.isDebugging()) {
-                for(ExtendedCLIQUESubspace<V> s : denseSubspaces) {
+            if (LOG.isDebugging()) {
+                for (ExtendedCLIQUESubspace<V> s : denseSubspaces) {
                     LOG.debug(s.toString("      "));
                 }
             }
@@ -202,44 +200,47 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
         System.out.println("Find multi-dimensionality: " + (System.nanoTime() - startTime) / 1000000000.0);
 
         // 2. Identification of clusters
-        if(LOG.isVerbose()) {
+        if (LOG.isVerbose()) {
             LOG.verbose("*** 2. Identification of clusters ***");
         }
         // build result
         int numClusters = 1;
         Clustering<SubspaceModel> result = new Clustering<>("CLIQUE clustering", "clique-clustering");
-        for(Integer dim : dimensionToDenseSubspaces.keySet()) {
-            List<ExtendedCLIQUESubspace<V>> subspaces = dimensionToDenseSubspaces.get(dim);
-            List<Pair<Subspace, ModifiableDBIDs>> modelsAndClusters = determineClusters(subspaces);
-
-            if(LOG.isVerbose()) {
-                LOG.verbose("    " + (dim + 1) + "-dimensional clusters: " + modelsAndClusters.size());
-            }
 
 
-            for(Pair<Subspace, ModifiableDBIDs> modelAndCluster : modelsAndClusters) {
+        // ToDo: Only consider maximum dimensionality, so no need for a loop here
+//        for (Integer dim : dimensionToDenseSubspaces.keySet()) {
+        Integer dim = dimensionToDenseSubspaces.lastKey();
+        List<ExtendedCLIQUESubspace<V>> subspaces = dimensionToDenseSubspaces.get(dim);
+        List<Pair<Subspace, ModifiableDBIDs>> modelsAndClusters = determineClusters(subspaces);
 
-                ((ExtendedCLIQUESubspace)modelAndCluster.getFirst()).resetCoverage();
-
-                startTime = System.nanoTime();
-                // ToDo: No need to loop over all vectors if model's dimensionality is below maximum
-                for(DBIDIter it = relation.iterDBIDs(); it.valid(); it.advance()) {
-                    V featureVector = relation.get(it);
-                    ((ExtendedCLIQUESubspace)modelAndCluster.getFirst()).isContained(featureVector);
-                }
-                System.out.println("Prune clusters: " + (System.nanoTime() - startTime) / 1000000000.0);
-
-                // ToDo: Are too many candidate clusters created before being pruned?
-                if(((ExtendedCLIQUESubspace)modelAndCluster.getFirst()).getCoverage() / ((double)relation.size()) >= tau){
-//                if(true){
-                    Cluster<SubspaceModel> newCluster = new Cluster<>(modelAndCluster.second);
-                    newCluster.setModel(new SubspaceModel(modelAndCluster.first, Centroid.make(relation, modelAndCluster.second)));
-                    newCluster.setName("cluster_" + numClusters++);
-                    result.addToplevelCluster(newCluster);
-                }
-            }
-
+        if (LOG.isVerbose()) {
+            LOG.verbose("    " + (dim + 1) + "-dimensional clusters: " + modelsAndClusters.size());
         }
+
+        startTime = System.nanoTime();
+        // ToDo: No need to loop over all vectors if model's dimensionality is below maximum
+        for (Pair<Subspace, ModifiableDBIDs> modelAndCluster : modelsAndClusters) {
+            ((ExtendedCLIQUESubspace) modelAndCluster.getFirst()).resetCoverage();
+        }
+        for (DBIDIter it = relation.iterDBIDs(); it.valid(); it.advance()) {
+            V featureVector = relation.get(it);
+            for (Pair<Subspace, ModifiableDBIDs> modelAndCluster : modelsAndClusters) {
+                ((ExtendedCLIQUESubspace) modelAndCluster.getFirst()).isContained(featureVector);
+            }
+        }
+        for (Pair<Subspace, ModifiableDBIDs> modelAndCluster : modelsAndClusters) {
+            // ToDo: Are too many candidate clusters created before being pruned?
+            if (((ExtendedCLIQUESubspace) modelAndCluster.getFirst()).getCoverage() / ((double) relation.size()) >= tau) {
+//                if(true){
+                Cluster<SubspaceModel> newCluster = new Cluster<>(modelAndCluster.second);
+                newCluster.setModel(new SubspaceModel(modelAndCluster.first, Centroid.make(relation, modelAndCluster.second)));
+                newCluster.setName("cluster_" + numClusters++);
+                result.addToplevelCluster(newCluster);
+            }
+        }
+        System.out.println("Prune clusters: " + (System.nanoTime() - startTime) / 1000000000.0);
+//        }
 
         return result;
     }
@@ -248,16 +249,16 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
      * Determines the clusters in the specified dense subspaces.
      *
      * @param denseSubspaces the dense subspaces in reverse order by their
-     *        coverage
+     *                       coverage
      * @return the clusters in the specified dense subspaces and the corresponding
-     *         cluster models
+     * cluster models
      */
     private List<Pair<Subspace, ModifiableDBIDs>> determineClusters(List<ExtendedCLIQUESubspace<V>> denseSubspaces) {
         List<Pair<Subspace, ModifiableDBIDs>> clusters = new ArrayList<>();
 
-        for(ExtendedCLIQUESubspace<V> subspace : denseSubspaces) {
+        for (ExtendedCLIQUESubspace<V> subspace : denseSubspaces) {
             List<Pair<Subspace, ModifiableDBIDs>> clustersInSubspace = subspace.determineClusters();
-            if(LOG.isDebugging()) {
+            if (LOG.isDebugging()) {
                 LOG.debugFine("Subspace " + subspace + " clusters " + clustersInSubspace.size());
             }
             clusters.addAll(clustersInSubspace);
@@ -271,12 +272,12 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
      *
      * @param database the database to run the algorithm on
      * @return the one dimensional dense subspaces reverse ordered by their
-     *         coverage
+     * coverage
      */
     private List<ExtendedCLIQUESubspace<V>> findOneDimensionalDenseSubspaces(Relation<V> database) {
         List<ExtendedCLIQUESubspace<V>> denseSubspaceCandidates = findOneDimensionalDenseSubspaceCandidates(database);
 
-        if(prune) {
+        if (prune) {
             return pruneDenseSubspaces(denseSubspaceCandidates);
         }
 
@@ -287,15 +288,15 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
      * Determines the {@code k}-dimensional dense subspaces and performs a pruning
      * if this option is chosen.
      *
-     * @param database the database to run the algorithm on
+     * @param database       the database to run the algorithm on
      * @param denseSubspaces the {@code (k-1)}-dimensional dense subspaces
      * @return a list of the {@code k}-dimensional dense subspaces sorted in
-     *         reverse order by their coverage
+     * reverse order by their coverage
      */
     private List<ExtendedCLIQUESubspace<V>> findDenseSubspaces(Relation<V> database, List<ExtendedCLIQUESubspace<V>> denseSubspaces) {
         List<ExtendedCLIQUESubspace<V>> denseSubspaceCandidates = findDenseSubspaceCandidates(database, denseSubspaces);
 
-        if(prune) {
+        if (prune) {
             return pruneDenseSubspaces(denseSubspaceCandidates);
         }
 
@@ -308,31 +309,31 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
      * @param database the database to run the algorithm on
      * @return the created one dimensional units
      */
-    private Collection<ExtendedCliqueUnit<V>> initOneDimensionalUnits(Relation<V> database) {
+    private ArrayList<ExtendedCliqueUnit<V>> initOneDimensionalUnits(Relation<V> database) {
         int dimensionality = RelationUtil.dimensionality(database);
         // initialize minima and maxima
         double[] minima = new double[dimensionality];
         double[] maxima = new double[dimensionality];
-        for(int d = 0; d < dimensionality; d++) {
+        for (int d = 0; d < dimensionality; d++) {
             maxima[d] = -Double.MAX_VALUE;
             minima[d] = Double.MAX_VALUE;
         }
         // update minima and maxima
-        for(DBIDIter it = database.iterDBIDs(); it.valid(); it.advance()) {
+        for (DBIDIter it = database.iterDBIDs(); it.valid(); it.advance()) {
             V featureVector = database.get(it);
             updateMinMax(featureVector, minima, maxima);
         }
-        for(int i = 0; i < maxima.length; i++) {
+        for (int i = 0; i < maxima.length; i++) {
             maxima[i] += 0.0001;
         }
 
         // determine the unit length in each dimension
         double[] unit_lengths = new double[dimensionality];
-        for(int d = 0; d < dimensionality; d++) {
+        for (int d = 0; d < dimensionality; d++) {
             unit_lengths[d] = (maxima[d] - minima[d]) / xsi;
         }
 
-        if(LOG.isDebuggingFiner()) {
+        if (LOG.isDebuggingFiner()) {
             StringBuilder msg = new StringBuilder();
             msg.append("   minima: ").append(FormatUtil.format(minima, ", ", FormatUtil.NF2));
             msg.append("\n   maxima: ").append(FormatUtil.format(maxima, ", ", FormatUtil.NF2));
@@ -342,31 +343,31 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
 
         // determine the boundaries of the units
         double[][] unit_bounds = new double[xsi + 1][dimensionality];
-        for(int x = 0; x <= xsi; x++) {
-            for(int d = 0; d < dimensionality; d++) {
-                if(x < xsi) {
+        for (int x = 0; x <= xsi; x++) {
+            for (int d = 0; d < dimensionality; d++) {
+                if (x < xsi) {
                     unit_bounds[x][d] = minima[d] + x * unit_lengths[d];
-                }
-                else {
+                } else {
                     unit_bounds[x][d] = maxima[d];
                 }
             }
         }
-        if(LOG.isDebuggingFiner()) {
+        if (LOG.isDebuggingFiner()) {
             StringBuilder msg = new StringBuilder();
             msg.append("   unit bounds ").append(FormatUtil.format(new Matrix(unit_bounds), "   "));
             LOG.debugFiner(msg.toString());
         }
 
         // build the 1 dimensional units
-        List<ExtendedCliqueUnit<V>> units = new ArrayList<>((xsi * dimensionality));
-        for(int x = 0; x < xsi; x++) {
-            for(int d = 0; d < dimensionality; d++) {
+        ArrayList<ExtendedCliqueUnit<V>> units = new ArrayList<>((xsi * dimensionality));
+        for (int d = 0; d < dimensionality; d++) {
+            for (int x = 0; x < xsi; x++) {
+//            for (int d = 0; d < dimensionality; d++) {
                 units.add(new ExtendedCliqueUnit<V>(new CLIQUEInterval(d, unit_bounds[x][d], unit_bounds[x + 1][d])));
             }
         }
 
-        if(LOG.isDebuggingFiner()) {
+        if (LOG.isDebuggingFiner()) {
             StringBuilder msg = new StringBuilder();
             msg.append("   total number of 1-dim units: ").append(units.size());
             LOG.debugFiner(msg.toString());
@@ -380,18 +381,18 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
      * vector.
      *
      * @param featureVector the feature vector
-     * @param minima the array of minima
-     * @param maxima the array of maxima
+     * @param minima        the array of minima
+     * @param maxima        the array of maxima
      */
     private void updateMinMax(V featureVector, double[] minima, double[] maxima) {
-        if(minima.length != featureVector.getDimensionality()) {
+        if (minima.length != featureVector.getDimensionality()) {
             throw new IllegalArgumentException("FeatureVectors differ in length.");
         }
-        for(int d = 0; d < featureVector.getDimensionality(); d++) {
-            if((featureVector.getMax(d)) > maxima[d]) {
+        for (int d = 0; d < featureVector.getDimensionality(); d++) {
+            if ((featureVector.getMax(d)) > maxima[d]) {
                 maxima[d] = (featureVector.getMax(d));
             }
-            if((featureVector.getMin(d)) < minima[d]) {
+            if ((featureVector.getMin(d)) < minima[d]) {
                 minima[d] = (featureVector.getMin(d));
             }
 //            if((featureVector.doubleValue(d)) > maxima[d]) {
@@ -402,7 +403,49 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
 //            }
 
 
+        }
+    }
 
+    // Code from GeeksForGeeks
+    private void binaryInsert(ArrayList<ExtendedCliqueUnit<V>> units, int l, int u, V vector) {
+        assert u >= l;
+
+        int j = 0;
+        int lower = l;
+        int upper = u;
+        int curIn = 0;
+
+        double value = 0;
+        CLIQUEInterval a = null;
+        while (lower <= upper) {
+
+            curIn = (lower + upper) / 2;
+
+            a = units.get(curIn).getIntervals().get(0);
+            value = vector.getMin(a.getDimension());
+
+            if (a.getMin() < value)
+                lower = curIn + 1;
+            else if (a.getMin() > value)
+                upper = curIn - 1;
+            else if (a.getMin() == value)
+                break;
+        }
+//        if (a != null && a.getMin() <= value) {
+//            j = curIn + 1;
+//        } else {
+//            j = curIn;
+//        }
+        j = curIn;
+
+        units.get(j).addFeatureVector(null, vector);
+
+        boolean terminate = false;
+        while (!terminate) {
+            j++;
+            if (j > u || !units.get(j).addFeatureVector(null, vector)) {
+                terminate = true;
+            }
         }
     }
 
@@ -412,37 +455,85 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
      *
      * @param database the database to run the algorithm on
      * @return the one-dimensional dense subspace candidates reverse ordered by
-     *         their coverage
+     * their coverage
      */
     private List<ExtendedCLIQUESubspace<V>> findOneDimensionalDenseSubspaceCandidates(Relation<V> database) {
-        Collection<ExtendedCliqueUnit<V>> units = initOneDimensionalUnits(database);
+        ArrayList<ExtendedCliqueUnit<V>> units = initOneDimensionalUnits(database);
         // identify dense units
         double total = database.size();
-        for(DBIDIter it = database.iterDBIDs(); it.valid(); it.advance()) {
+        for (DBIDIter it = database.iterDBIDs(); it.valid(); it.advance()) {
             V featureVector = database.get(it);
-            for(ExtendedCliqueUnit<V> unit : units) {
-                unit.addFeatureVector(it, featureVector);
+
+            for (int i = 0; i < featureVector.getDimensionality(); i++) {
+                binaryInsert(units, i * xsi, ((i + 1) * xsi) - 1, featureVector);
             }
+
+//            for (ExtendedCliqueUnit<V> unit : units) {
+//                unit.addFeatureVector(it, featureVector);
+//            }
         }
 
-        Collection<ExtendedCliqueUnit<V>> denseUnits = new ArrayList<>();
+        ArrayList<ExtendedCliqueUnit<V>> denseUnits = new ArrayList<>();
         Map<Integer, ExtendedCLIQUESubspace<V>> denseSubspaces = new HashMap<>();
-        for(ExtendedCliqueUnit<V> unit : units) {
+        for (ExtendedCliqueUnit<V> unit : units) {
             // unit is a dense unit
-            if(unit.selectivity(total) >= tau) {
+            if (unit.selectivity(total) >= tau) {
                 denseUnits.add(unit);
                 // add the dense unit to its subspace
                 int dim = unit.getIntervals().iterator().next().getDimension();
                 ExtendedCLIQUESubspace<V> subspace_d = denseSubspaces.get(Integer.valueOf(dim));
-                if(subspace_d == null) {
+                if (subspace_d == null) {
                     subspace_d = new ExtendedCLIQUESubspace<>(dim);
                     denseSubspaces.put(Integer.valueOf(dim), subspace_d);
                 }
+
                 subspace_d.addDenseUnit(unit);
             }
         }
 
-        if(LOG.isDebugging()) {
+        // Prune // ToDo: Make this code nicer
+        for (ExtendedCLIQUESubspace<V> denseSubspace : denseSubspaces.values()) {
+            ArrayList<ExtendedCliqueUnit<V>> prunedDenseUnits = new ArrayList<>();
+            int i_ = 0;
+            for (int i = 0; i < denseSubspace.getDenseUnits().size() - 1; i++) {
+                if (!denseSubspace.getDenseUnits().get(i).containsLeftNeighbor(denseSubspace.getDenseUnits().get(i + 1).getIntervals().get(0))) {
+                    if (i != i_) {
+                        CLIQUEInterval firstInterval = denseSubspace.getDenseUnits().get(i_).getIntervals().get(0);
+                        CLIQUEInterval secondInterval = denseSubspace.getDenseUnits().get(i).getIntervals().get(0);
+
+                        prunedDenseUnits.add(new ExtendedCliqueUnit<>(new CLIQUEInterval(firstInterval.getDimension(),
+                                firstInterval.getMin(),
+                                secondInterval.getMax())));
+                    } else {
+                        prunedDenseUnits.add(denseSubspace.getDenseUnits().get(i));
+                    }
+                    i_ = i + 1;
+                }
+            }
+            if (i_ < denseSubspace.getDenseUnits().size() - 1) {
+                CLIQUEInterval firstInterval = denseSubspace.getDenseUnits().get(i_).getIntervals().get(0);
+                CLIQUEInterval secondInterval = denseSubspace.getDenseUnits().get(denseSubspace.getDenseUnits().size() - 1).getIntervals().get(0);
+
+                prunedDenseUnits.add(new ExtendedCliqueUnit<>(new CLIQUEInterval(firstInterval.getDimension(),
+                        firstInterval.getMin(),
+                        secondInterval.getMax())));
+            } else {
+                if (!denseSubspace.getDenseUnits().get(denseSubspace.getDenseUnits().size() - 2).containsRightNeighbor(denseSubspace.getDenseUnits().get(denseSubspace.getDenseUnits().size() - 1).getIntervals().get(0))) {
+                    CLIQUEInterval firstInterval = denseSubspace.getDenseUnits().get(denseSubspace.getDenseUnits().size() - 2).getIntervals().get(0);
+                    CLIQUEInterval secondInterval = denseSubspace.getDenseUnits().get(denseSubspace.getDenseUnits().size() - 1).getIntervals().get(0);
+                    prunedDenseUnits.remove(prunedDenseUnits.size() - 1);
+
+                    prunedDenseUnits.add(new ExtendedCliqueUnit<>(new CLIQUEInterval(firstInterval.getDimension(),
+                            firstInterval.getMin(),
+                            secondInterval.getMax())));
+                } else {
+                    prunedDenseUnits.add(denseSubspace.getDenseUnits().get(denseSubspace.getDenseUnits().size() - 1));
+                }
+            }
+            denseSubspace.setDenseUnits(prunedDenseUnits);
+        }
+
+        if (LOG.isDebugging()) {
             StringBuilder msg = new StringBuilder();
             msg.append("   number of 1-dim dense units: ").append(denseUnits.size());
             msg.append("\n   number of 1-dim dense subspace candidates: ").append(denseSubspaces.size());
@@ -458,10 +549,10 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
      * Determines the {@code k}-dimensional dense subspace candidates from the
      * specified {@code (k-1)}-dimensional dense subspaces.
      *
-     * @param database the database to run the algorithm on
+     * @param database       the database to run the algorithm on
      * @param denseSubspaces the {@code (k-1)}-dimensional dense subspaces
      * @return a list of the {@code k}-dimensional dense subspace candidates
-     *         reverse ordered by their coverage
+     * reverse ordered by their coverage
      */
     private List<ExtendedCLIQUESubspace<V>> findDenseSubspaceCandidates(Relation<V> database, List<ExtendedCLIQUESubspace<V>> denseSubspaces) {
         // sort (k-1)-dimensional dense subspace according to their dimensions
@@ -472,16 +563,16 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
         double all = database.size();
         List<ExtendedCLIQUESubspace<V>> denseSubspaceCandidates = new ArrayList<>();
 
-        while(!denseSubspacesByDimensions.isEmpty()) {
+        while (!denseSubspacesByDimensions.isEmpty()) {
             ExtendedCLIQUESubspace<V> s1 = denseSubspacesByDimensions.remove(0);
-            for(ExtendedCLIQUESubspace<V> s2 : denseSubspacesByDimensions) {
+            for (ExtendedCLIQUESubspace<V> s2 : denseSubspacesByDimensions) {
                 ExtendedCLIQUESubspace<V> s = s1.join(s2, all, tau);
-                if(s != null) {
+                if (s != null) {
                     denseSubspaceCandidates.add(s);
 
-                    for(DBIDIter it = database.iterDBIDs(); it.valid(); it.advance()) {
+                    for (DBIDIter it = database.iterDBIDs(); it.valid(); it.advance()) {
                         V featureVector = database.get(it);
-                        for(ExtendedCliqueUnit<V> unit : s.getDenseUnits()) {
+                        for (ExtendedCliqueUnit<V> unit : s.getDenseUnits()) {
                             unit.addFeatureVector(it, featureVector);
                         }
                     }
@@ -500,9 +591,9 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
      * in the CLIQUE algorithm.
      *
      * @param denseSubspaces the subspaces to be pruned sorted in reverse order by
-     *        their coverage
+     *                       their coverage
      * @return the subspaces which are not pruned reverse ordered by their
-     *         coverage
+     * coverage
      */
     private List<ExtendedCLIQUESubspace<V>> pruneDenseSubspaces(List<ExtendedCLIQUESubspace<V>> denseSubspaces) {
         int[][] means = computeMeans(denseSubspaces);
@@ -511,7 +602,7 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
         double minCL = Double.MAX_VALUE;
         int min_i = -1;
 
-        for(int i = 0; i < denseSubspaces.size(); i++) {
+        for (int i = 0; i < denseSubspaces.size(); i++) {
             int mi = means[0][i];
             int mp = means[1][i];
             double log_mi = mi == 0 ? 0 : StrictMath.log(mi) / StrictMath.log(2);
@@ -520,7 +611,7 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
             double diff_mp = diffs[1][i];
             codeLength[i] = log_mi + diff_mi + log_mp + diff_mp;
 
-            if(codeLength[i] <= minCL) {
+            if (codeLength[i] <= minCL) {
                 minCL = codeLength[i];
                 min_i = i;
             }
@@ -535,9 +626,9 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
      * computed.
      *
      * @param denseSubspaces the dense subspaces in reverse order by their
-     *        coverage
+     *                       coverage
      * @return the mean of the cover fractions, the first value is the mean of the
-     *         selected set I, the second value is the mean of the pruned set P.
+     * selected set I, the second value is the mean of the pruned set P.
      */
     private int[][] computeMeans(List<ExtendedCLIQUESubspace<V>> denseSubspaces) {
         int n = denseSubspaces.size() - 1;
@@ -548,11 +639,11 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
         double resultMI = 0;
         double resultMP = 0;
 
-        for(int i = 0; i < denseSubspaces.size(); i++) {
+        for (int i = 0; i < denseSubspaces.size(); i++) {
             resultMI += denseSubspaces.get(i).getCoverage();
             resultMP += denseSubspaces.get(n - i).getCoverage();
             mi[i] = (int) Math.ceil(resultMI / (i + 1));
-            if(i != n) {
+            if (i != n) {
                 mp[n - 1 - i] = (int) Math.ceil(resultMP / (i + 1));
             }
         }
@@ -570,12 +661,12 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
      * mean values is computed.
      *
      * @param denseSubspaces denseSubspaces the dense subspaces in reverse order
-     *        by their coverage
-     * @param mi the mean of the selected sets I
-     * @param mp the mean of the pruned sets P
+     *                       by their coverage
+     * @param mi             the mean of the selected sets I
+     * @param mp             the mean of the pruned sets P
      * @return the difference from the specified mean values, the first value is
-     *         the difference from the mean of the selected set I, the second
-     *         value is the difference from the mean of the pruned set P.
+     * the difference from the mean of the selected set I, the second
+     * value is the difference from the mean of the pruned set P.
      */
     private double[][] computeDiffs(List<ExtendedCLIQUESubspace<V>> denseSubspaces, int[] mi, int[] mp) {
         int n = denseSubspaces.size() - 1;
@@ -586,13 +677,13 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
         double resultMI = 0;
         double resultMP = 0;
 
-        for(int i = 0; i < denseSubspaces.size(); i++) {
+        for (int i = 0; i < denseSubspaces.size(); i++) {
             double diffMI = Math.abs(denseSubspaces.get(i).getCoverage() - mi[i]);
             resultMI += diffMI == 0.0 ? 0 : StrictMath.log(diffMI) / StrictMath.log(2);
             double diffMP = (i != n) ? Math.abs(denseSubspaces.get(n - i).getCoverage() - mp[n - 1 - i]) : 0;
             resultMP += diffMP == 0.0 ? 0 : StrictMath.log(diffMP) / StrictMath.log(2);
             diff_mi[i] = resultMI;
-            if(i != n) {
+            if (i != n) {
                 diff_mp[n - 1 - i] = resultMP;
             }
         }
@@ -617,7 +708,6 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
      * Parameterization class.
      *
      * @author Erich Schubert
-     *
      * @apiviz.exclude
      */
     public static class Parameterizer<V extends NumberVector> extends AbstractParameterizer {
@@ -632,19 +722,19 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
             super.makeOptions(config);
             IntParameter xsiP = new IntParameter(XSI_ID);
             xsiP.addConstraint(CommonConstraints.GREATER_EQUAL_ONE_INT);
-            if(config.grab(xsiP)) {
+            if (config.grab(xsiP)) {
                 xsi = xsiP.intValue();
             }
 
             DoubleParameter tauP = new DoubleParameter(TAU_ID);
             tauP.addConstraint(CommonConstraints.GREATER_THAN_ZERO_DOUBLE);
             tauP.addConstraint(CommonConstraints.LESS_THAN_ONE_DOUBLE);
-            if(config.grab(tauP)) {
+            if (config.grab(tauP)) {
                 tau = tauP.doubleValue();
             }
 
             Flag pruneF = new Flag(PRUNE_ID);
-            if(config.grab(pruneF)) {
+            if (config.grab(pruneF)) {
                 prune = pruneF.isTrue();
             }
         }

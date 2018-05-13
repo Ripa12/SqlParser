@@ -2,22 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b3c707b8-6b20-426a-bd55-9e8aa044a33d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/SqlParser/Smile/Clustering.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/SqlParser/Smile/ClusteringDistance.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/SqlParser/Smile/DENCLUE.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/SqlParser/Smile/PartitionClustering.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/SqlParser/SUBCLUTest.java" afterPath="$PROJECT_DIR$/src/test/java/SqlParser/SUBCLUTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SqlParser.iml" afterPath="$PROJECT_DIR$/SqlParser.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/testdata/unittests/test_data.csv" afterPath="$PROJECT_DIR$/data/testdata/unittests/test_data.csv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/SqlParser/Clique.java" afterPath="$PROJECT_DIR$/src/main/java/SqlParser/Clique.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/SqlParser/ExtendedCLIQUESubspace.java" afterPath="$PROJECT_DIR$/src/main/java/SqlParser/ExtendedCLIQUESubspace.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/SqlParser/ExtendedCliqueUnit.java" afterPath="$PROJECT_DIR$/src/main/java/SqlParser/ExtendedCliqueUnit.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/SqlParser/MyInterval.java" afterPath="$PROJECT_DIR$/src/main/java/SqlParser/MyInterval.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/SqlParser/MyPoint.java" afterPath="$PROJECT_DIR$/src/main/java/SqlParser/MyPoint.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/SqlParser/MyVector.java" afterPath="$PROJECT_DIR$/src/main/java/SqlParser/MyVector.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/SqlParser/QueryGenerator.java" afterPath="$PROJECT_DIR$/src/main/java/SqlParser/QueryGenerator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/SqlParser/CliqueTest.java" afterPath="$PROJECT_DIR$/src/test/java/SqlParser/CliqueTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/SqlParser/SUBCLUTest.java" afterPath="$PROJECT_DIR$/src/test/java/SqlParser/SUBCLUTest.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -36,31 +27,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="CliqueTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CliqueTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/SqlParser/CliqueTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
-              <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test_data.csv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/test_data.csv">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test_data.csv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/testdata/unittests/test_data.csv">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="24280389">
-              <caret line="1156209" column="11" lean-forward="false" selection-start-line="1156209" selection-start-column="11" selection-end-line="1156209" selection-end-column="11" />
+            <state relative-caret-position="189">
+              <caret line="42" column="0" lean-forward="true" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -69,9 +40,48 @@
       <file leaf-file-name="Clique.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/Clique.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8694">
-              <caret line="453" column="0" lean-forward="false" selection-start-line="453" selection-start-column="0" selection-end-line="453" selection-end-column="0" />
+            <state relative-caret-position="396">
+              <caret line="493" column="46" lean-forward="true" selection-start-line="493" selection-start-column="46" selection-end-line="493" selection-end-column="46" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MyVector.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/MyVector.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="174">
+              <caret line="28" column="18" lean-forward="false" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
+              <folding>
+                <element signature="e#711#712#0" expanded="true" />
+                <element signature="e#743#744#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExtendedCliqueUnit.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/ExtendedCliqueUnit.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="163">
+              <caret line="76" column="19" lean-forward="false" selection-start-line="76" selection-start-column="19" selection-end-line="76" selection-end-column="19" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExtendedCLIQUESubspace.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/ExtendedCLIQUESubspace.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="5376">
+              <caret line="272" column="0" lean-forward="false" selection-start-line="272" selection-start-column="0" selection-end-line="272" selection-end-column="0" />
+              <folding>
+                <element signature="e#9277#9278#0" expanded="true" />
+                <element signature="e#9340#9341#0" expanded="true" />
+                <element signature="e#9371#9372#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -79,18 +89,8 @@
       <file leaf-file-name="App.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/App.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="42" column="69" lean-forward="false" selection-start-line="42" selection-start-column="69" selection-end-line="42" selection-end-column="69" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SUBCLUTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/SqlParser/SUBCLUTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1134">
-              <caret line="102" column="41" lean-forward="false" selection-start-line="102" selection-start-column="41" selection-end-line="102" selection-end-column="41" />
+            <state relative-caret-position="252">
+              <caret line="38" column="0" lean-forward="false" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -100,30 +100,20 @@
         <entry file="file://$PROJECT_DIR$/src/test/java/SqlParser/AppTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="147">
-              <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+              <caret line="9" column="21" lean-forward="false" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1386">
-              <caret line="66" column="18" lean-forward="false" selection-start-line="66" selection-start-column="18" selection-end-line="66" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="QueryGenerator.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="QueryGenerator.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/QueryGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="63" column="41" lean-forward="false" selection-start-line="63" selection-start-column="41" selection-end-line="63" selection-end-column="41" />
+            <state relative-caret-position="-517">
+              <caret line="71" column="56" lean-forward="true" selection-start-line="71" selection-start-column="56" selection-end-line="71" selection-end-column="56" />
               <folding>
                 <element signature="method#generateBatchOfQueries#0;class#QueryGenerator#0" expanded="false" />
-                <marker date="1526138121450" expanded="true" signature="8073:8275" ph="{...}" />
+                <marker date="1526225015674" expanded="true" signature="8185:8387" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -160,7 +150,6 @@
       <find>dense</find>
       <find>CLIQUESubspace</find>
       <find>CLIQUEUnit</find>
-      <find>denseUnits</find>
       <find>determineClusters</find>
       <find>resultIDs</find>
       <find>addFeatureVector</find>
@@ -170,6 +159,7 @@
       <find>d_zero</find>
       <find>Model</find>
       <find>coverage</find>
+      <find>denseUnits</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -198,9 +188,7 @@
         <option value="$PROJECT_DIR$/src/main/java/SqlParser/IntervalTree.java" />
         <option value="$PROJECT_DIR$/src/main/java/SqlParser/GenericExpressionVisitor.java" />
         <option value="$PROJECT_DIR$/src/main/java/SqlParser/MyRelation.java" />
-        <option value="$PROJECT_DIR$/target/classes/test_data.csv" />
         <option value="$PROJECT_DIR$/target/classes/subspace-simple.csv" />
-        <option value="$PROJECT_DIR$/data/testdata/unittests/test_data.csv" />
         <option value="$PROJECT_DIR$/src/main/java/SqlParser/Cliue.java" />
         <option value="$PROJECT_DIR$/src/main/java/SqlParser/CliqueUnit.java" />
         <option value="$PROJECT_DIR$/src/main/java/SqlParser/App.java" />
@@ -208,10 +196,7 @@
         <option value="$PROJECT_DIR$/src/main/java/SqlParser/MyVector.java" />
         <option value="$PROJECT_DIR$/src/main/java/SqlParser/MyInterval.java" />
         <option value="$PROJECT_DIR$/src/main/java/SqlParser/MyPoint.java" />
-        <option value="$PROJECT_DIR$/src/main/java/SqlParser/Clique.java" />
         <option value="$PROJECT_DIR$/src/main/java/SqlParser/ExtendedCliqueUnit.java" />
-        <option value="$PROJECT_DIR$/src/main/java/SqlParser/QueryGenerator.java" />
-        <option value="$PROJECT_DIR$/src/main/java/SqlParser/ExtendedCLIQUESubspace.java" />
         <option value="$PROJECT_DIR$/src/main/java/SqlParser/SUBCLUTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/SqlParser/GridDBSCAN/MyDBIDs.java" />
         <option value="$PROJECT_DIR$/src/main/java/SqlParser/GridDBSCAN/ExtendedGDBSCAN.java" />
@@ -220,9 +205,14 @@
         <option value="$PROJECT_DIR$/src/main/java/SqlParser/Smile/Clustering.java" />
         <option value="$PROJECT_DIR$/src/main/java/SqlParser/Smile/ClusteringDistance.java" />
         <option value="$PROJECT_DIR$/src/main/java/SqlParser/Smile/PartitionClustering.java" />
+        <option value="$PROJECT_DIR$/target/classes/test_data.csv" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/SqlParser/ExtendedCLIQUESubspace.java" />
+        <option value="$PROJECT_DIR$/data/testdata/unittests/test_data.csv" />
         <option value="$PROJECT_DIR$/src/test/java/SqlParser/SUBCLUTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/SqlParser/Clique.java" />
         <option value="$PROJECT_DIR$/src/test/java/SqlParser/CliqueTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/SqlParser/QueryGenerator.java" />
       </list>
     </option>
   </component>
@@ -249,7 +239,6 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -379,36 +368,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SqlParser" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Smile" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SqlParser" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SqlParser" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="data" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -423,6 +382,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -814,35 +774,35 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CliqueTest_testMyRelation - 2018.05.13 at 02h 11m 46s.xml">
+    <history-entry file="CliqueTest_testMyRelation - 2018.05.13 at 23h 39m 21s.xml">
       <configuration name="CliqueTest.testMyRelation" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CliqueTest_testMyRelation - 2018.05.13 at 02h 12m 06s.xml">
+    <history-entry file="CliqueTest_testMyRelation - 2018.05.13 at 23h 39m 30s.xml">
       <configuration name="CliqueTest.testMyRelation" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CliqueTest_testMyRelation - 2018.05.13 at 02h 14m 06s.xml">
+    <history-entry file="CliqueTest_testMyRelation - 2018.05.13 at 23h 40m 06s.xml">
       <configuration name="CliqueTest.testMyRelation" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CliqueTest_testMyRelation - 2018.05.13 at 02h 14m 54s.xml">
+    <history-entry file="CliqueTest_testMyRelation - 2018.05.14 at 00h 16m 14s.xml">
       <configuration name="CliqueTest.testMyRelation" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CliqueTest_testMyRelation - 2018.05.13 at 02h 15m 16s.xml">
+    <history-entry file="CliqueTest_testMyRelation - 2018.05.14 at 00h 18m 39s.xml">
       <configuration name="CliqueTest.testMyRelation" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CliqueTest_testMyRelation - 2018.05.13 at 02h 25m 42s.xml">
+    <history-entry file="CliqueTest_testMyRelation - 2018.05.14 at 00h 19m 04s.xml">
       <configuration name="CliqueTest.testMyRelation" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CliqueTest_testMyRelation - 2018.05.13 at 02h 26m 45s.xml">
+    <history-entry file="CliqueTest_testMyRelation - 2018.05.14 at 00h 19m 34s.xml">
       <configuration name="CliqueTest.testMyRelation" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CliqueTest_testMyRelation - 2018.05.13 at 02h 27m 36s.xml">
+    <history-entry file="CliqueTest_testMyRelation - 2018.05.14 at 00h 20m 12s.xml">
       <configuration name="CliqueTest.testMyRelation" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="SUBCLUTest_testSUBCLUResults - 2018.05.13 at 02h 12m 36s.xml">
-      <configuration name="SUBCLUTest.testSUBCLUResults" configurationId="JUnit" />
+    <history-entry file="CliqueTest_testMyRelation - 2018.05.14 at 00h 22m 20s.xml">
+      <configuration name="CliqueTest.testMyRelation" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="SUBCLUTest_testSUBCLUResults - 2018.05.13 at 02h 12m 52s.xml">
-      <configuration name="SUBCLUTest.testSUBCLUResults" configurationId="JUnit" />
+    <history-entry file="CliqueTest_testMyRelation - 2018.05.14 at 00h 23m 49s.xml">
+      <configuration name="CliqueTest.testMyRelation" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
@@ -852,29 +812,29 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3233288" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287858" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42564803" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.52523875" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2425" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.178125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3424284" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32742155" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3233288" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294964" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -912,43 +872,31 @@
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/SqlParser/CliqueTest.java</url>
-          <line>55</line>
+          <url>file://$PROJECT_DIR$/src/main/java/SqlParser/QueryGenerator.java</url>
+          <line>174</line>
           <properties />
-          <option name="timeStamp" value="81" />
+          <option name="timeStamp" value="177" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/SqlParser/Clique.java</url>
-          <line>214</line>
+          <line>175</line>
           <properties />
-          <option name="timeStamp" value="159" />
+          <option name="timeStamp" value="183" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/SqlParser/Clique.java</url>
-          <line>190</line>
+          <line>535</line>
           <properties />
-          <option name="timeStamp" value="160" />
+          <option name="timeStamp" value="190" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/SqlParser/Clique.java</url>
-          <line>453</line>
+          <line>475</line>
           <properties />
-          <option name="timeStamp" value="166" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/SqlParser/Clique.java</url>
-          <line>225</line>
-          <properties />
-          <option name="timeStamp" value="167" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/SqlParser/SUBCLUTest.java</url>
-          <line>104</line>
-          <properties />
-          <option name="timeStamp" value="174" />
+          <option name="timeStamp" value="197" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="175" />
+      <option name="time" value="198" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="JUnit">
@@ -965,41 +913,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/de/lmu/ifi/dbs/elki/elki/0.7.1/elki-0.7.1-sources.jar!/de/lmu/ifi/dbs/elki/utilities/BitsUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="404" column="24" lean-forward="false" selection-start-line="404" selection-start-column="24" selection-end-line="404" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12.jar!/org/junit/internal/runners/model/ReflectiveCallable.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/de/lmu/ifi/dbs/elki/elki/0.7.1/elki-0.7.1-sources.jar!/de/lmu/ifi/dbs/elki/data/NumberVector.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="56" column="9" lean-forward="false" selection-start-line="56" selection-start-column="9" selection-end-line="56" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/de/lmu/ifi/dbs/elki/elki/0.7.1/elki-0.7.1-sources.jar!/de/lmu/ifi/dbs/elki/math/linearalgebra/Centroid.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="186" column="36" lean-forward="true" selection-start-line="186" selection-start-column="36" selection-end-line="186" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/de/lmu/ifi/dbs/elki/elki/0.7.1/elki-0.7.1-sources.jar!/de/lmu/ifi/dbs/elki/algorithm/clustering/subspace/clique/CLIQUEUnit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="227" column="23" lean-forward="false" selection-start-line="227" selection-start-column="23" selection-end-line="227" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/de/lmu/ifi/dbs/elki/elki/0.7.1/elki-0.7.1-sources.jar!/de/lmu/ifi/dbs/elki/algorithm/clustering/subspace/clique/CLIQUESubspace.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
@@ -1032,6 +945,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="585">
           <caret line="44" column="17" lean-forward="false" selection-start-line="44" selection-start-column="17" selection-end-line="44" selection-end-column="17" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1053,6 +967,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="583">
           <caret line="83" column="39" lean-forward="true" selection-start-line="83" selection-start-column="39" selection-end-line="83" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1082,7 +997,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="127">
           <caret line="112" column="0" lean-forward="false" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1090,16 +1004,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="106">
           <caret line="79" column="0" lean-forward="false" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/MyVector.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding>
-            <element signature="e#662#663#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1114,7 +1018,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-567">
           <caret line="19" column="36" lean-forward="false" selection-start-line="19" selection-start-column="36" selection-end-line="19" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1144,6 +1047,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-374">
           <caret line="98" column="14" lean-forward="false" selection-start-line="98" selection-start-column="14" selection-end-line="98" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1154,24 +1058,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/ExtendedCliqueUnit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4284">
-          <caret line="219" column="33" lean-forward="false" selection-start-line="219" selection-start-column="33" selection-end-line="219" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#5917#5918#0" expanded="false" />
-            <element signature="e#5948#5949#0" expanded="false" />
-            <element signature="e#6049#6050#0" expanded="false" />
-            <element signature="e#6085#6086#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/de/lmu/ifi/dbs/elki/elki/0.7.1/elki-0.7.1-sources.jar!/de/lmu/ifi/dbs/elki/data/Cluster.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1697">
           <caret line="118" column="9" lean-forward="false" selection-start-line="118" selection-start-column="9" selection-end-line="118" selection-end-column="9" />
+          <folding>
+            <element signature="e#3209#3210#0" expanded="false" />
+            <element signature="e#3248#3249#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1193,30 +1087,19 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="151">
           <caret line="244" column="34" lean-forward="true" selection-start-line="244" selection-start-column="34" selection-end-line="244" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/GridDBSCAN/MyDBIDs.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/ExtendedCLIQUESubspace.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3612">
-          <caret line="186" column="0" lean-forward="false" selection-start-line="186" selection-start-column="0" selection-end-line="186" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#9111#9112#0" expanded="false" />
-            <element signature="e#9142#9143#0" expanded="false" />
-            <element signature="e#9246#9247#0" expanded="false" />
-            <element signature="e#9279#9280#0" expanded="false" />
+            <element signature="e#6125#6126#0" expanded="false" />
+            <element signature="e#6172#6173#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/GridDBSCAN/MyDBIDs.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/GridDBSCAN/ExtendedGDBSCAN.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/Smile/Clustering.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="24" column="19" lean-forward="false" selection-start-line="0" selection-start-column="2" selection-end-line="36" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1224,7 +1107,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="22" column="14" lean-forward="false" selection-start-line="0" selection-start-column="2" selection-end-line="35" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1232,7 +1114,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
           <caret line="121" column="9" lean-forward="true" selection-start-line="121" selection-start-column="9" selection-end-line="121" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1240,14 +1121,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="318">
           <caret line="45" column="59" lean-forward="false" selection-start-line="0" selection-start-column="2" selection-end-line="358" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/SqlParser/AppTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -1273,82 +1146,160 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/test_data.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1386">
-          <caret line="66" column="18" lean-forward="false" selection-start-line="66" selection-start-column="18" selection-end-line="66" selection-end-column="18" />
+        <state relative-caret-position="188">
+          <caret line="70" column="19" lean-forward="true" selection-start-line="70" selection-start-column="19" selection-end-line="70" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/SqlParser/AppTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="9" column="21" lean-forward="false" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/de/lmu/ifi/dbs/elki/elki/0.7.1/elki-0.7.1-sources.jar!/de/lmu/ifi/dbs/elki/algorithm/clustering/AbstractProjectedClustering.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="78" column="9" lean-forward="false" selection-start-line="78" selection-start-column="9" selection-end-line="78" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/de/lmu/ifi/dbs/elki/elki/0.7.1/elki-0.7.1-sources.jar!/de/lmu/ifi/dbs/elki/algorithm/clustering/subspace/PROCLUS.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="128" column="7" lean-forward="true" selection-start-line="128" selection-start-column="7" selection-end-line="128" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/testdata/unittests/subspace-simple.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12.jar!/org/junit/runners/ParentRunner.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="332">
+          <caret line="202" column="0" lean-forward="false" selection-start-line="202" selection-start-column="0" selection-end-line="202" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12.jar!/org/junit/internal/runners/model/ReflectiveCallable.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/ExtendedCLIQUESubspace.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5376">
+          <caret line="272" column="0" lean-forward="false" selection-start-line="272" selection-start-column="0" selection-end-line="272" selection-end-column="0" />
+          <folding>
+            <element signature="e#9277#9278#0" expanded="true" />
+            <element signature="e#9340#9341#0" expanded="true" />
+            <element signature="e#9371#9372#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/testdata/unittests/test_data.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="500000" column="0" lean-forward="false" selection-start-line="500000" selection-start-column="0" selection-end-line="500000" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/SqlParser/SUBCLUTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1134">
-          <caret line="102" column="41" lean-forward="false" selection-start-line="102" selection-start-column="41" selection-end-line="102" selection-end-column="41" />
+        <state relative-caret-position="252">
+          <caret line="90" column="25" lean-forward="true" selection-start-line="89" selection-start-column="17" selection-end-line="90" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/target/classes/test_data.csv">
+      <provider editor-type-id="LargeFileEditor">
+        <state relative-caret-position="390">
+          <caret line="500000" column="0" lean-forward="true" selection-start-line="500000" selection-start-column="0" selection-end-line="500000" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="500000" column="0" lean-forward="false" selection-start-line="500000" selection-start-column="0" selection-end-line="500000" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/Clique.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/MyVector.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8694">
-          <caret line="453" column="0" lean-forward="false" selection-start-line="453" selection-start-column="0" selection-end-line="453" selection-end-column="0" />
+        <state relative-caret-position="174">
+          <caret line="28" column="18" lean-forward="false" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
+          <folding>
+            <element signature="e#711#712#0" expanded="true" />
+            <element signature="e#743#744#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/ExtendedCliqueUnit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="76" column="19" lean-forward="false" selection-start-line="76" selection-start-column="19" selection-end-line="76" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/App.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="42" column="69" lean-forward="false" selection-start-line="42" selection-start-column="69" selection-end-line="42" selection-end-column="69" />
+        <state relative-caret-position="252">
+          <caret line="38" column="0" lean-forward="false" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/test_data.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/testdata/unittests/test_data.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24280389">
-          <caret line="1156209" column="11" lean-forward="false" selection-start-line="1156209" selection-start-column="11" selection-end-line="1156209" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/target/classes/test_data.csv">
-      <provider selected="true" editor-type-id="LargeFileEditor">
-        <state relative-caret-position="265">
-          <caret line="37647" column="2" lean-forward="true" selection-start-line="37647" selection-start-column="2" selection-end-line="37647" selection-end-column="2" />
-        </state>
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="37647" column="2" lean-forward="true" selection-start-line="37647" selection-start-column="2" selection-end-line="37647" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/QueryGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="63" column="41" lean-forward="false" selection-start-line="63" selection-start-column="41" selection-end-line="63" selection-end-column="41" />
-          <folding>
-            <element signature="method#generateBatchOfQueries#0;class#QueryGenerator#0" expanded="false" />
-            <marker date="1526138121450" expanded="true" signature="8073:8275" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/SqlParser/CliqueTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="46" column="0" lean-forward="false" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+        <state relative-caret-position="189">
+          <caret line="42" column="0" lean-forward="true" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/Clique.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="493" column="46" lean-forward="true" selection-start-line="493" selection-start-column="46" selection-end-line="493" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/SqlParser/QueryGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-517">
+          <caret line="71" column="56" lean-forward="true" selection-start-line="71" selection-start-column="56" selection-end-line="71" selection-end-column="56" />
+          <folding>
+            <element signature="method#generateBatchOfQueries#0;class#QueryGenerator#0" expanded="false" />
+            <marker date="1526225015674" expanded="true" signature="8185:8387" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>

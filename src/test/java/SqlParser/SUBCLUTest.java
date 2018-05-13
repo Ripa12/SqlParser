@@ -21,7 +21,11 @@
 package SqlParser;
 
 import de.lmu.ifi.dbs.elki.algorithm.clustering.GriDBSCAN;
+import de.lmu.ifi.dbs.elki.algorithm.clustering.correlation.LMCLUS;
+import de.lmu.ifi.dbs.elki.algorithm.clustering.gdbscan.LSDBC;
+import de.lmu.ifi.dbs.elki.algorithm.clustering.onedimensional.KNNKernelDensityMinimaClustering;
 import de.lmu.ifi.dbs.elki.algorithm.clustering.subspace.DOC;
+import de.lmu.ifi.dbs.elki.algorithm.clustering.subspace.PROCLUS;
 import de.lmu.ifi.dbs.elki.data.Cluster;
 import de.lmu.ifi.dbs.elki.data.model.ClusterModel;
 import de.lmu.ifi.dbs.elki.data.model.Model;
@@ -50,7 +54,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
-
 /**
  * Performs a full SUBCLU run, and compares the result with a clustering derived
  * from the data set labels. This test ensures that SUBCLU performance doesn't
@@ -80,32 +83,12 @@ public class SUBCLUTest {
 
         Database db = makeSimpleDatabase(UNITTEST + "test_data.csv", 0);
 
-        double[][] d = new double[10][3];
-        d[0] = new double[]{1,1,1};
-        d[1] = new double[]{1,1,1};
-        d[2] = new double[]{1,1,1};
-        d[3] = new double[]{1,1,1};
-        d[4] = new double[]{1,1,1};
-        d[5] = new double[]{1,1,1};
-        d[6] = new double[]{1,1,1};
-        d[7] = new double[]{1,1,1};
-        d[8] = new double[]{100,100,100};
-        d[9] = new double[]{1,1,1};
+//        PROCLUS<DoubleVector> pclus = new PROCLUS(3, 3, 1,1, new RandomFactory(12));
+//        Clustering<?> result =  pclus.run(db);
 
-        BIRCH cl = new BIRCH(3, 2, 1);
 
-        for (double[] doubles : d) {
-            cl.add(doubles);
-        }
-
-        cl.partition(5);
-
-        double [][] res = cl.centroids();
-
-        System.out.print(3);
-
-//        Clustering<?> result = new DOC<DoubleVector>(.3, .5, .1, false, 0, new RandomFactory(2))
-//                .run(db);
+        Clustering<?> result = new DOC<DoubleVector>(.3, .2, .1, true, 0, new RandomFactory(22))
+                .run(db);
 
 //        Clustering<Model> result = new LSDBC<MyVector>(EuclideanDistanceFunction.STATIC, 20, .4).run(db);
 
@@ -113,7 +96,7 @@ public class SUBCLUTest {
 //                .run(db);
 
 //        Clustering<Model> result = new GriDBSCAN<DoubleVector>(EuclideanDistanceFunction.STATIC, .1,
-//                30, 10).run(db);
+//                10, 100).run(db);
 
 //        Clustering<?> result = new ELKIBuilder<DOC<DoubleVector>>(DOC.class) //
 //                .with(DOC.Parameterizer.RANDOM_ID, 0) //
@@ -121,11 +104,11 @@ public class SUBCLUTest {
 //                .with(DOC.Parameterizer.BETA_ID, 0.85) //
 //                .build().run(db);
 
-//        for (Cluster<?> cl : result.getAllClusters()) {
-//            System.out.println(((SubspaceModel)cl.getModel()).getMean());
-//            System.out.println(cl.getModel().getClass().getName());
-//            System.out.println(cl.getIDs().size());
-////            cl.getModel()
+        for (Cluster<?> cl : result.getAllClusters()) {
+            System.out.println(((SubspaceModel)cl.getModel()).getMean());
+            System.out.println(cl.getModel().getClass().getName());
+            System.out.println(cl.getIDs().size());
+//            cl.getModel()
 //
 //
 ////            if(cl.getModel().getSubspace() instanceof ExtendedCLIQUESubspace) {
@@ -170,7 +153,7 @@ public class SUBCLUTest {
 ////
 ////            }
 
-//        }
+        }
     }
 
 

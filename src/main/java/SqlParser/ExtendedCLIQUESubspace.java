@@ -165,7 +165,7 @@ public class ExtendedCLIQUESubspace<V extends MyVector> extends Subspace {
                 clusters.add(new Pair<Subspace, ModifiableDBIDs>(model, cluster));
                 dfs(unit, cluster, model);
 
-                //model.coverage = 0; // ToDo: Nicer solution?
+                model.coverage = 0; // ToDo: Nicer solution?
             }
         }
         return clusters;
@@ -271,6 +271,9 @@ public class ExtendedCLIQUESubspace<V extends MyVector> extends Subspace {
      */
     public List<ExtendedCliqueUnit<V>> getDenseUnits() {
         return denseUnits;
+    }
+    public void setDenseUnits(List<ExtendedCliqueUnit<V>> v) {
+         denseUnits = v;
     }
 
     /**

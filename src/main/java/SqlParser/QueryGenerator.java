@@ -61,8 +61,8 @@ public class QueryGenerator {
         return stmts.toString();
     }
 
-    private final static int NR_OF_Q = 10000;
-    private final static int MAX_DUPLICATES = 200;
+    private final static int NR_OF_Q = 500000;
+    private final static int MAX_DUPLICATES = 1;
 
     private final static int MAX_UPPER_BOUND = 200;
 
@@ -70,10 +70,10 @@ public class QueryGenerator {
     private final static int FIRST_UPPER_BOUND = 500;
 
     private final static int SECOND_LOWER_BOUND = 90000;
-    private final static int SECOND_UPPER_BOUND = 160000;
+    private final static int SECOND_UPPER_BOUND = 601000;
 
-    private final static int THIRD_LOWER_BOUND = 67000;
-    private final static int THIRD_UPPER_BOUND = 82000;
+    private final static int THIRD_LOWER_BOUND = 600000;
+    private final static int THIRD_UPPER_BOUND = 8200000;
 
     static void generateCSV(String filename){
         String path = String.valueOf(QueryGenerator.class.getClassLoader().getResource(filename).getPath());
@@ -95,14 +95,11 @@ public class QueryGenerator {
                     int[] start = new int[3];
                     int[] end = new int[3];
 
-                    for (int k = 0; k < 1; k++) {
+                    for (int k = 0; k < 3; k++) {
                         random = rand.nextInt(101);
-                        if (random <= 20) { //This is 20% more
+                        if (random <= 40) { //This is 20% more
 //                            start[k] = rand.nextInt((FIRST_UPPER_BOUND - FIRST_LOWER_BOUND) + 1) + FIRST_LOWER_BOUND;
 //                            end[k] = rand.nextInt((FIRST_UPPER_BOUND - start[k]) + 1) + start[k];
-
-//                            start[k] = FIRST_LOWER_BOUND;
-//                            end[k] = FIRST_UPPER_BOUND;
 
                             start[0] = FIRST_LOWER_BOUND;
                             end[0] = FIRST_UPPER_BOUND;
@@ -110,12 +107,9 @@ public class QueryGenerator {
                             end[1] = SECOND_UPPER_BOUND;
                             start[2] = THIRD_LOWER_BOUND;
                             end[2] = THIRD_UPPER_BOUND;
-                        } else if (random <= 101) {
+                        } else if (random <= 75) {
 //                            start[k] = rand.nextInt((SECOND_UPPER_BOUND - SECOND_LOWER_BOUND) + 1) + SECOND_LOWER_BOUND;
 //                            end[k] = rand.nextInt((SECOND_UPPER_BOUND - start[k]) + 1) + start[k];
-
-//                            start[k] = SECOND_LOWER_BOUND;
-//                            end[k] = SECOND_UPPER_BOUND;
 
                             start[0] = THIRD_LOWER_BOUND;
                             end[0] = THIRD_UPPER_BOUND;
@@ -124,8 +118,15 @@ public class QueryGenerator {
                             start[2] = FIRST_LOWER_BOUND;
                             end[2] = FIRST_UPPER_BOUND;
                         } else {
-                            start[k] = rand.nextInt((THIRD_UPPER_BOUND - THIRD_LOWER_BOUND) + 1) + THIRD_LOWER_BOUND;
-                            end[k] = rand.nextInt((THIRD_UPPER_BOUND - start[k]) + 1) + start[k];
+//                            start[k] = rand.nextInt((THIRD_UPPER_BOUND - THIRD_LOWER_BOUND) + 1) + THIRD_LOWER_BOUND;
+//                            end[k] = rand.nextInt((THIRD_UPPER_BOUND - start[k]) + 1) + start[k];
+
+                            start[0] = FIRST_LOWER_BOUND;
+                            end[0] = FIRST_UPPER_BOUND;
+                            start[1] = THIRD_LOWER_BOUND;
+                            end[1] = THIRD_UPPER_BOUND;
+                            start[2] = SECOND_LOWER_BOUND;
+                            end[2] = SECOND_UPPER_BOUND;
                         }
                     }
 
@@ -135,7 +136,7 @@ public class QueryGenerator {
                     if (rand.nextInt(10) > 0)
                         total = rand.nextInt(MAX_DUPLICATES)+1;
                     for (int t = 0; t < total; t++) {
-                        out.print(String.format("%d %d %d %d %d %d%n", start[0], start[1], start[2], end[0], end[1], end[2]));
+                        out.println(String.format("%d %d %d %d %d %d", start[0], start[1], start[2], end[0], end[1], end[2]));
                     }
 
 
@@ -170,7 +171,7 @@ public class QueryGenerator {
             e.printStackTrace();
         } finally {
             if(out != null) {
-                out.flush();
+                //out.flush();
                 out.close();
             }
         }
