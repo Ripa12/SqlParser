@@ -14,6 +14,7 @@ import de.lmu.ifi.dbs.elki.data.type.TypeUtil;
 import de.lmu.ifi.dbs.elki.database.Database;
 import de.lmu.ifi.dbs.elki.database.StaticArrayDatabase;
 import de.lmu.ifi.dbs.elki.database.ids.DBID;
+import de.lmu.ifi.dbs.elki.database.ids.DBIDIter;
 import de.lmu.ifi.dbs.elki.database.ids.DBIDUtil;
 import de.lmu.ifi.dbs.elki.database.relation.Relation;
 import de.lmu.ifi.dbs.elki.datasource.FileBasedDatabaseConnection;
@@ -41,16 +42,49 @@ public class CliqueTest {
     public void testMyRelation() {
         MyRelation<MyVector> rel = QueryGenerator.csvToRelation("test_data.csv");
 
-//        ListParameterization params = new ListParameterization();
-//        params.addParameter(Clique.TAU_ID, "0.05");
-//        params.addParameter(Clique.XSI_ID, 20);
-
-        // setup algorithm
-//        Clique<DoubleVector> clique = ClassGenericsUtil.parameterizeOrAbort(Clique.class, params);
-//        testParameterizationOk(params);
-
         // run CLIQUE on database
-        Clustering<SubspaceModel> result = new Clique<MyVector>(1000, .10, false).run(rel);
+        Clique clique = new Clique<>(1000, .10, false, rel.getDimensionality());
+
+        // update minima and maxima
+        for (DBIDIter it = rel.iterDBIDs(); it.valid(); it.advance()) {
+            clique.updateMinMax((MyVector) rel.get(it));
+        }
+
+        // initialize
+        clique.initOneDimensionalUnits();
+
+        // populate grids
+        for (DBIDIter it = rel.iterDBIDs(); it.valid(); it.advance()) {
+            clique.insertData((MyVector) rel.get(it));
+        }
+
+        // find clusters
+        clique.findClusters();
+
+        // validate clusters
+        for (DBIDIter it = rel.iterDBIDs(); it.valid(); it.advance()) {
+            clique.validateClusters((MyVector) rel.get(it));
+        }
+
+        // retrieve valid clusters
+        Clustering<SubspaceModel> result = clique.getClusters();
+
+//        Find multi-dimensionality: 0.163597685
+//        Prune clusters: 0.071436652
+//                -- Subspace --
+//        Coverage: 326946
+//        Dimension: [1, 2, 3]
+//        Dimension: 3
+//        0_[100.0, 8299.9000001]
+//        1_[90000.0, 8200000.0001]
+//        2_[90298.9000011, 8200000.0001]
+//        -- Subspace --
+//        Coverage: 173054
+//        Dimension: [1, 2, 3]
+//        Dimension: 3
+//        0_[598692.7000073, 8200000.0001]
+//        1_[90000.0, 8200000.0001]
+//        2_[100.0, 8299.9000001]
 
         List<Integer> sizes = new java.util.ArrayList<>();
         for (Cluster<SubspaceModel> cl : result.getAllClusters()) {

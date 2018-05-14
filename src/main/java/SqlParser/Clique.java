@@ -145,6 +145,20 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
      */
     private boolean prune;
 
+
+    /**
+     * My Variables.
+     */
+    private double[] minima;
+    private double[] maxima;
+    private int dimensionality;
+
+    int total;
+
+    ArrayList<ExtendedCliqueUnit<V>> units;
+    List<Pair<Subspace, ModifiableDBIDs>> modelsAndClusters;
+
+
     /**
      * Constructor.
      *
@@ -152,41 +166,111 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
      * @param tau   Tau value
      * @param prune Prune flag
      */
-    public Clique(int xsi, double tau, boolean prune) {
+    public Clique(int xsi, double tau, boolean prune, int dimensionality) {
         super();
         this.xsi = xsi;
         this.tau = tau;
         this.prune = prune;
+
+        this.total = 0;
+
+        this.dimensionality = dimensionality;
+
+        // initialize minima and maxima
+        minima = new double[dimensionality];
+        maxima = new double[dimensionality];
+        for (int d = 0; d < dimensionality; d++) {
+            maxima[d] = -Double.MAX_VALUE;
+            minima[d] = Double.MAX_VALUE;
+        }
+    }
+
+    /**
+     * Updates the minima and maxima array according to the specified feature
+     * vector.
+     *
+     * @param featureVector the feature vector
+    //     * @param minima        the array of minima
+    //     * @param maxima        the array of maxima
+     */
+    public void updateMinMax(V featureVector) {
+        if (minima.length != featureVector.getDimensionality()) {
+            throw new IllegalArgumentException("FeatureVectors differ in length.");
+        }
+        for (int d = 0; d < featureVector.getDimensionality(); d++) {
+            if ((featureVector.getMax(d)) > maxima[d]) {
+                maxima[d] = (featureVector.getMax(d));
+            }
+            if ((featureVector.getMin(d)) < minima[d]) {
+                minima[d] = (featureVector.getMin(d));
+            }
+        }
+    }
+
+    /**
+     * Initializes and returns the one dimensional units.
+     *
+     //     * @param database the database to run the algorithm on
+     * @return the created one dimensional units
+     */
+    public void initOneDimensionalUnits() {
+
+        for (int i = 0; i < maxima.length; i++) {
+            maxima[i] += 0.0001;
+        }
+
+        // determine the unit length in each dimension
+        double[] unit_lengths = new double[dimensionality];
+        for (int d = 0; d < dimensionality; d++) {
+            unit_lengths[d] = (maxima[d] - minima[d]) / xsi;
+        }
+
+        // determine the boundaries of the units
+        double[][] unit_bounds = new double[xsi + 1][dimensionality];
+        for (int x = 0; x <= xsi; x++) {
+            for (int d = 0; d < dimensionality; d++) {
+                if (x < xsi) {
+                    unit_bounds[x][d] = minima[d] + x * unit_lengths[d];
+                } else {
+                    unit_bounds[x][d] = maxima[d];
+                }
+            }
+        }
+
+        // build the 1 dimensional units
+        units = new ArrayList<>((xsi * dimensionality));
+        for (int d = 0; d < dimensionality; d++) {
+            for (int x = 0; x < xsi; x++) {
+//            for (int d = 0; d < dimensionality; d++) {
+                units.add(new ExtendedCliqueUnit<>(new CLIQUEInterval(d, unit_bounds[x][d], unit_bounds[x + 1][d])));
+            }
+        }
+    }
+
+    public void insertData(V featureVector){
+        for (int i = 0; i < featureVector.getDimensionality(); i++) {
+            binaryInsert(units, i * xsi, ((i + 1) * xsi) - 1, featureVector);
+        }
+
+        total++; // ToDo: Only increment if featureVector is inserted successively!
     }
 
     /**
      * Performs the CLIQUE algorithm on the given database.
      *
-     * @param relation Data relation to process
+//     * @param relation Data relation to process
      * @return Clustering result
      */
-    public Clustering<SubspaceModel> run(Relation<V> relation) {
+    public void findClusters() {
         // 1. Identification of subspaces that contain clusters
-        // TODO: use step logging.
-        if (LOG.isVerbose()) {
-            LOG.verbose("*** 1. Identification of subspaces that contain clusters ***");
-        }
         SortedMap<Integer, List<ExtendedCLIQUESubspace<V>>> dimensionToDenseSubspaces = new TreeMap<>();
-        List<ExtendedCLIQUESubspace<V>> denseSubspaces = findOneDimensionalDenseSubspaces(relation);
+        List<ExtendedCLIQUESubspace<V>> denseSubspaces = findOneDimensionalDenseSubspaces();
         dimensionToDenseSubspaces.put(Integer.valueOf(0), denseSubspaces);
-        if (LOG.isVerbose()) {
-            LOG.verbose("    1-dimensional dense subspaces: " + denseSubspaces.size());
-        }
-        if (LOG.isDebugging()) {
-            for (ExtendedCLIQUESubspace<V> s : denseSubspaces) {
-                LOG.debug(s.toString("      "));
-            }
-        }
+
 
         long startTime = System.nanoTime();
-        int dimensionality = RelationUtil.dimensionality(relation);
         for (int k = 2; k <= dimensionality && !denseSubspaces.isEmpty(); k++) {
-            denseSubspaces = findDenseSubspaces(relation, denseSubspaces);
+            denseSubspaces = findDenseSubspaces(denseSubspaces);
             dimensionToDenseSubspaces.put(Integer.valueOf(k - 1), denseSubspaces);
             if (LOG.isVerbose()) {
                 LOG.verbose("    " + k + "-dimensional dense subspaces: " + denseSubspaces.size());
@@ -199,48 +283,40 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
         }
         System.out.println("Find multi-dimensionality: " + (System.nanoTime() - startTime) / 1000000000.0);
 
-        // 2. Identification of clusters
-        if (LOG.isVerbose()) {
-            LOG.verbose("*** 2. Identification of clusters ***");
-        }
-        // build result
-        int numClusters = 1;
-        Clustering<SubspaceModel> result = new Clustering<>("CLIQUE clustering", "clique-clustering");
 
-
-        // ToDo: Only consider maximum dimensionality, so no need for a loop here
-//        for (Integer dim : dimensionToDenseSubspaces.keySet()) {
         Integer dim = dimensionToDenseSubspaces.lastKey();
         List<ExtendedCLIQUESubspace<V>> subspaces = dimensionToDenseSubspaces.get(dim);
-        List<Pair<Subspace, ModifiableDBIDs>> modelsAndClusters = determineClusters(subspaces);
+        modelsAndClusters = determineClusters(subspaces);
 
-        if (LOG.isVerbose()) {
-            LOG.verbose("    " + (dim + 1) + "-dimensional clusters: " + modelsAndClusters.size());
-        }
-
-        startTime = System.nanoTime();
-        // ToDo: No need to loop over all vectors if model's dimensionality is below maximum
+        // ToDo: Would be better to return clusters with 0 coverage, rather than loopoing over them here!
         for (Pair<Subspace, ModifiableDBIDs> modelAndCluster : modelsAndClusters) {
             ((ExtendedCLIQUESubspace) modelAndCluster.getFirst()).resetCoverage();
         }
-        for (DBIDIter it = relation.iterDBIDs(); it.valid(); it.advance()) {
-            V featureVector = relation.get(it);
-            for (Pair<Subspace, ModifiableDBIDs> modelAndCluster : modelsAndClusters) {
-                ((ExtendedCLIQUESubspace) modelAndCluster.getFirst()).isContained(featureVector);
-            }
+    }
+
+    public void validateClusters(V featureVector){
+        for (Pair<Subspace, ModifiableDBIDs> modelAndCluster : modelsAndClusters) {
+            ((ExtendedCLIQUESubspace) modelAndCluster.getFirst()).isContained(featureVector);
         }
+    }
+
+    public Clustering<SubspaceModel> getClusters(){
+        if(modelsAndClusters == null)
+            return null;
+
+        int numClusters = 1;
+        Clustering<SubspaceModel> result = new Clustering<>("CLIQUE clustering", "clique-clustering");
+
         for (Pair<Subspace, ModifiableDBIDs> modelAndCluster : modelsAndClusters) {
             // ToDo: Are too many candidate clusters created before being pruned?
-            if (((ExtendedCLIQUESubspace) modelAndCluster.getFirst()).getCoverage() / ((double) relation.size()) >= tau) {
-//                if(true){
+            if (((ExtendedCLIQUESubspace) modelAndCluster.getFirst()).getCoverage() / ((double) total) >= tau) {
                 Cluster<SubspaceModel> newCluster = new Cluster<>(modelAndCluster.second);
-                newCluster.setModel(new SubspaceModel(modelAndCluster.first, Centroid.make(relation, modelAndCluster.second)));
+//                newCluster.setModel(new SubspaceModel(modelAndCluster.first, Centroid.make(relation, modelAndCluster.second))); // ToDo: Is mean really necessary?
+                newCluster.setModel(new SubspaceModel(modelAndCluster.first, null));
                 newCluster.setName("cluster_" + numClusters++);
                 result.addToplevelCluster(newCluster);
             }
         }
-        System.out.println("Prune clusters: " + (System.nanoTime() - startTime) / 1000000000.0);
-//        }
 
         return result;
     }
@@ -270,12 +346,13 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
      * Determines the one dimensional dense subspaces and performs a pruning if
      * this option is chosen.
      *
-     * @param database the database to run the algorithm on
+//     * @param database the database to run the algorithm on
      * @return the one dimensional dense subspaces reverse ordered by their
      * coverage
      */
-    private List<ExtendedCLIQUESubspace<V>> findOneDimensionalDenseSubspaces(Relation<V> database) {
-        List<ExtendedCLIQUESubspace<V>> denseSubspaceCandidates = findOneDimensionalDenseSubspaceCandidates(database);
+//    private List<ExtendedCLIQUESubspace<V>> findOneDimensionalDenseSubspaces(Relation<V> database) {
+    private List<ExtendedCLIQUESubspace<V>> findOneDimensionalDenseSubspaces() {
+        List<ExtendedCLIQUESubspace<V>> denseSubspaceCandidates = findOneDimensionalDenseSubspaceCandidates();
 
         if (prune) {
             return pruneDenseSubspaces(denseSubspaceCandidates);
@@ -288,13 +365,14 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
      * Determines the {@code k}-dimensional dense subspaces and performs a pruning
      * if this option is chosen.
      *
-     * @param database       the database to run the algorithm on
+//     * @param database       the database to run the algorithm on
      * @param denseSubspaces the {@code (k-1)}-dimensional dense subspaces
      * @return a list of the {@code k}-dimensional dense subspaces sorted in
      * reverse order by their coverage
      */
-    private List<ExtendedCLIQUESubspace<V>> findDenseSubspaces(Relation<V> database, List<ExtendedCLIQUESubspace<V>> denseSubspaces) {
-        List<ExtendedCLIQUESubspace<V>> denseSubspaceCandidates = findDenseSubspaceCandidates(database, denseSubspaces);
+//    private List<ExtendedCLIQUESubspace<V>> findDenseSubspaces(Relation<V> database, List<ExtendedCLIQUESubspace<V>> denseSubspaces) {
+    private List<ExtendedCLIQUESubspace<V>> findDenseSubspaces(List<ExtendedCLIQUESubspace<V>> denseSubspaces) {
+        List<ExtendedCLIQUESubspace<V>> denseSubspaceCandidates = findDenseSubspaceCandidates(denseSubspaces);
 
         if (prune) {
             return pruneDenseSubspaces(denseSubspaceCandidates);
@@ -303,112 +381,25 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
         return denseSubspaceCandidates;
     }
 
-    /**
-     * Initializes and returns the one dimensional units.
-     *
-     * @param database the database to run the algorithm on
-     * @return the created one dimensional units
-     */
-    private ArrayList<ExtendedCliqueUnit<V>> initOneDimensionalUnits(Relation<V> database) {
-        int dimensionality = RelationUtil.dimensionality(database);
-        // initialize minima and maxima
-        double[] minima = new double[dimensionality];
-        double[] maxima = new double[dimensionality];
-        for (int d = 0; d < dimensionality; d++) {
-            maxima[d] = -Double.MAX_VALUE;
-            minima[d] = Double.MAX_VALUE;
-        }
-        // update minima and maxima
-        for (DBIDIter it = database.iterDBIDs(); it.valid(); it.advance()) {
-            V featureVector = database.get(it);
-            updateMinMax(featureVector, minima, maxima);
-        }
-        for (int i = 0; i < maxima.length; i++) {
-            maxima[i] += 0.0001;
-        }
 
-        // determine the unit length in each dimension
-        double[] unit_lengths = new double[dimensionality];
-        for (int d = 0; d < dimensionality; d++) {
-            unit_lengths[d] = (maxima[d] - minima[d]) / xsi;
-        }
-
-        if (LOG.isDebuggingFiner()) {
-            StringBuilder msg = new StringBuilder();
-            msg.append("   minima: ").append(FormatUtil.format(minima, ", ", FormatUtil.NF2));
-            msg.append("\n   maxima: ").append(FormatUtil.format(maxima, ", ", FormatUtil.NF2));
-            msg.append("\n   unit lengths: ").append(FormatUtil.format(unit_lengths, ", ", FormatUtil.NF2));
-            LOG.debugFiner(msg.toString());
-        }
-
-        // determine the boundaries of the units
-        double[][] unit_bounds = new double[xsi + 1][dimensionality];
-        for (int x = 0; x <= xsi; x++) {
-            for (int d = 0; d < dimensionality; d++) {
-                if (x < xsi) {
-                    unit_bounds[x][d] = minima[d] + x * unit_lengths[d];
-                } else {
-                    unit_bounds[x][d] = maxima[d];
-                }
-            }
-        }
-        if (LOG.isDebuggingFiner()) {
-            StringBuilder msg = new StringBuilder();
-            msg.append("   unit bounds ").append(FormatUtil.format(new Matrix(unit_bounds), "   "));
-            LOG.debugFiner(msg.toString());
-        }
-
-        // build the 1 dimensional units
-        ArrayList<ExtendedCliqueUnit<V>> units = new ArrayList<>((xsi * dimensionality));
-        for (int d = 0; d < dimensionality; d++) {
-            for (int x = 0; x < xsi; x++) {
-//            for (int d = 0; d < dimensionality; d++) {
-                units.add(new ExtendedCliqueUnit<V>(new CLIQUEInterval(d, unit_bounds[x][d], unit_bounds[x + 1][d])));
-            }
-        }
-
-        if (LOG.isDebuggingFiner()) {
-            StringBuilder msg = new StringBuilder();
-            msg.append("   total number of 1-dim units: ").append(units.size());
-            LOG.debugFiner(msg.toString());
-        }
-
-        return units;
-    }
-
-    /**
-     * Updates the minima and maxima array according to the specified feature
-     * vector.
-     *
-     * @param featureVector the feature vector
-     * @param minima        the array of minima
-     * @param maxima        the array of maxima
-     */
-    private void updateMinMax(V featureVector, double[] minima, double[] maxima) {
-        if (minima.length != featureVector.getDimensionality()) {
-            throw new IllegalArgumentException("FeatureVectors differ in length.");
-        }
-        for (int d = 0; d < featureVector.getDimensionality(); d++) {
-            if ((featureVector.getMax(d)) > maxima[d]) {
-                maxima[d] = (featureVector.getMax(d));
-            }
-            if ((featureVector.getMin(d)) < minima[d]) {
-                minima[d] = (featureVector.getMin(d));
-            }
-//            if((featureVector.doubleValue(d)) > maxima[d]) {
-//                maxima[d] = (featureVector.doubleValue(d));
-//            }
-//            if((featureVector.doubleValue(d)) < minima[d]) {
-//                minima[d] = (featureVector.doubleValue(d));
-//            }
-
-
-        }
-    }
 
     // Code from GeeksForGeeks
     private void binaryInsert(ArrayList<ExtendedCliqueUnit<V>> units, int l, int u, V vector) {
         assert u >= l;
+
+        // ToDo: Should work but does not! In the meantime, settle for binary insert...
+//        int dim = units.get(0).getIntervals().get(0).getDimension();
+//        int j = (int)Math.floor(vector.getValue(dim).doubleValue()/((maxima[dim] - minima[dim]) / xsi));
+//
+//        units.get(j).addFeatureVector(null, vector);
+//
+//        boolean terminate = false;
+//        while (!terminate) {
+//            j++;
+//            if (j > u || !units.get(j).addFeatureVector(null, vector)) {
+//                terminate = true;
+//            }
+//        }
 
         int j = 0;
         int lower = l;
@@ -431,11 +422,6 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
             else if (a.getMin() == value)
                 break;
         }
-//        if (a != null && a.getMin() <= value) {
-//            j = curIn + 1;
-//        } else {
-//            j = curIn;
-//        }
         j = curIn;
 
         units.get(j).addFeatureVector(null, vector);
@@ -453,24 +439,13 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
      * Determines the one-dimensional dense subspace candidates by making a pass
      * over the database.
      *
-     * @param database the database to run the algorithm on
+//     * @param database the database to run the algorithm on
      * @return the one-dimensional dense subspace candidates reverse ordered by
      * their coverage
      */
-    private List<ExtendedCLIQUESubspace<V>> findOneDimensionalDenseSubspaceCandidates(Relation<V> database) {
-        ArrayList<ExtendedCliqueUnit<V>> units = initOneDimensionalUnits(database);
-        // identify dense units
-        double total = database.size();
-        for (DBIDIter it = database.iterDBIDs(); it.valid(); it.advance()) {
-            V featureVector = database.get(it);
-
-            for (int i = 0; i < featureVector.getDimensionality(); i++) {
-                binaryInsert(units, i * xsi, ((i + 1) * xsi) - 1, featureVector);
-            }
-
-//            for (ExtendedCliqueUnit<V> unit : units) {
-//                unit.addFeatureVector(it, featureVector);
-//            }
+    private List<ExtendedCLIQUESubspace<V>> findOneDimensionalDenseSubspaceCandidates() {
+        if(units == null){
+            return null;
         }
 
         ArrayList<ExtendedCliqueUnit<V>> denseUnits = new ArrayList<>();
@@ -533,13 +508,6 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
             denseSubspace.setDenseUnits(prunedDenseUnits);
         }
 
-        if (LOG.isDebugging()) {
-            StringBuilder msg = new StringBuilder();
-            msg.append("   number of 1-dim dense units: ").append(denseUnits.size());
-            msg.append("\n   number of 1-dim dense subspace candidates: ").append(denseSubspaces.size());
-            LOG.debugFine(msg.toString());
-        }
-
         List<ExtendedCLIQUESubspace<V>> subspaceCandidates = new ArrayList<>(denseSubspaces.values());
         Collections.sort(subspaceCandidates, new ExtendedCLIQUESubspace.CoverageComparator());
         return subspaceCandidates;
@@ -549,18 +517,18 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
      * Determines the {@code k}-dimensional dense subspace candidates from the
      * specified {@code (k-1)}-dimensional dense subspaces.
      *
-     * @param database       the database to run the algorithm on
+//     * @param database       the database to run the algorithm on
      * @param denseSubspaces the {@code (k-1)}-dimensional dense subspaces
      * @return a list of the {@code k}-dimensional dense subspace candidates
      * reverse ordered by their coverage
      */
-    private List<ExtendedCLIQUESubspace<V>> findDenseSubspaceCandidates(Relation<V> database, List<ExtendedCLIQUESubspace<V>> denseSubspaces) {
+    private List<ExtendedCLIQUESubspace<V>> findDenseSubspaceCandidates(List<ExtendedCLIQUESubspace<V>> denseSubspaces) {
         // sort (k-1)-dimensional dense subspace according to their dimensions
         List<ExtendedCLIQUESubspace<V>> denseSubspacesByDimensions = new ArrayList<>(denseSubspaces);
         Collections.sort(denseSubspacesByDimensions, new Subspace.DimensionComparator());
 
         // determine k-dimensional dense subspace candidates
-        double all = database.size();
+        double all = total;
         List<ExtendedCLIQUESubspace<V>> denseSubspaceCandidates = new ArrayList<>();
 
         while (!denseSubspacesByDimensions.isEmpty()) {
@@ -569,14 +537,6 @@ public class Clique<V extends MyVector> extends AbstractAlgorithm<Clustering<Sub
                 ExtendedCLIQUESubspace<V> s = s1.join(s2, all, tau);
                 if (s != null) {
                     denseSubspaceCandidates.add(s);
-
-                    for (DBIDIter it = database.iterDBIDs(); it.valid(); it.advance()) {
-                        V featureVector = database.get(it);
-                        for (ExtendedCliqueUnit<V> unit : s.getDenseUnits()) {
-                            unit.addFeatureVector(it, featureVector);
-                        }
-                    }
-
                 }
             }
         }
